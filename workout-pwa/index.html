@@ -235,6 +235,33 @@ body {
 
 /* ── Exercise sections ── */
 .ex-section { margin-bottom: 24px; }
+.ex-section.ss-start { margin-bottom: 0; }
+.ex-section.ss-start .ex-card { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
+.ss-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px;
+}
+.ss-tag::before, .ss-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--warm);
+  opacity: 0.25;
+}
+.ss-tag span {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--warm);
+  opacity: 0.6;
+  white-space: nowrap;
+}
+.ex-section.ss-end { margin-top: 0; }
+.ex-section.ss-end .ex-card { border-top-left-radius: 0; border-top-right-radius: 0; }
 .ex-header {
   display: flex;
   justify-content: space-between;
@@ -1395,8 +1422,12 @@ function renderW() {
     const dn = ex.sets.filter(s => s.done).length;
     const tot = ex.sets.length;
     const prev = lastSets(session.wid, ex.name);
+    const isSSStart = ex.sets.every(s => !s.rest);
+    const prevEx = session.exercises[ei - 1];
+    const isSSEnd = prevEx && prevEx.sets.every(s => !s.rest);
     return `
-      <div class="ex-section">
+      ${isSSEnd ? `<div class="ss-tag"><span>superset</span></div>` : ''}
+      <div class="ex-section${isSSStart ? ' ss-start' : ''}${isSSEnd ? ' ss-end' : ''}"
         <div class="ex-header">
           <span class="ex-name" style="flex:1">${ex.name}</span>
           ${ALTS[ex.name] ? `<button class="ex-swap" data-e="${ei}">\u21C4</button>` : ''}
