@@ -266,9 +266,9 @@ body {
 
 .set-row {
   display: grid;
-  grid-template-columns: 32px 52px 1fr 1fr 48px;
-  gap: 10px;
-  padding: 16px 16px;
+  grid-template-columns: 24px 44px 1fr 1fr 44px;
+  gap: 8px;
+  padding: 14px 12px;
   align-items: center;
   position: relative;
   transition: background 0.4s;
@@ -277,8 +277,8 @@ body {
   content: '';
   position: absolute;
   top: 0;
-  left: 48px;
-  right: 14px;
+  left: 40px;
+  right: 12px;
   height: 1px;
   background: var(--t08);
 }
@@ -359,7 +359,7 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-top: 1px solid var(--t08);
 }
 .set-ctrl {
@@ -548,12 +548,13 @@ body {
   inset: 0;
   display: grid;
   place-items: center;
-  font-family: var(--display);
-  font-size: 64px;
-  font-weight: 200;
+  font-family: var(--mono);
+  font-size: 56px;
+  font-weight: 300;
   letter-spacing: 2px;
   color: var(--t90);
   transition: color 1s ease;
+  font-variant-numeric: tabular-nums;
 }
 .t-time.warn { color: var(--danger); }
 .t-label {
@@ -1447,7 +1448,7 @@ function startTmr(sec, name, si) {
 }
 
 function updTmr(r, t) {
-  $('tTime').textContent = `${Math.floor(r / 60)}:${(r % 60).toString().padStart(2, '0')}`;
+  $('tTime').textContent = `${String(Math.floor(r / 60)).padStart(2, ' ')}:${(r % 60).toString().padStart(2, '0')}`;
   $('tTime').classList.toggle('warn', r <= 10);
   drawRing(r / t, r <= 10);
 }
