@@ -21,14 +21,14 @@
   --text: #e8e4df;
   --warm: #d4a574;
   --cool: #7b9db8;
-  --t90: rgba(232,228,223,0.95);
-  --t60: rgba(232,228,223,0.7);
-  --t35: rgba(232,228,223,0.55);
-  --t15: rgba(232,228,223,0.38);
-  --t08: rgba(232,228,223,0.15);
-  --t04: rgba(232,228,223,0.08);
-  --w15: rgba(212,165,116,0.15);
-  --w08: rgba(212,165,116,0.08);
+  --t90: rgba(232,228,223,1);
+  --t60: rgba(232,228,223,0.85);
+  --t35: rgba(232,228,223,0.7);
+  --t15: rgba(232,228,223,0.55);
+  --t08: rgba(232,228,223,0.22);
+  --t04: rgba(232,228,223,0.12);
+  --w15: rgba(212,165,116,0.22);
+  --w08: rgba(212,165,116,0.12);
   --danger: #c45c5c;
   --display: 'Outfit', sans-serif;
   --mono: 'IBM Plex Mono', monospace;
@@ -150,7 +150,7 @@ body {
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--warm);
-  opacity: 0.85;
+  opacity: 1;
   margin-bottom: 10px;
 }
 .card-name {
@@ -201,7 +201,7 @@ body {
 .aim {
   font-size: 11px;
   font-weight: 400;
-  color: rgba(212,165,116,0.75);
+  color: rgba(212,165,116,0.9);
   margin-top: 2px;
   letter-spacing: 0;
 }
@@ -256,7 +256,7 @@ body {
   letter-spacing: 1px;
   color: var(--t15);
 }
-.ex-count.done { color: var(--warm); opacity: 0.6; }
+.ex-count.done { color: var(--warm); opacity: 0.85; }
 
 .ex-card {
   border: 1px solid var(--t08);
@@ -292,7 +292,7 @@ body {
   color: var(--t35);
   text-align: center;
 }
-.set-row.done .sn { color: var(--warm); opacity: 0.7; }
+.set-row.done .sn { color: var(--warm); opacity: 0.9; }
 .st {
   font-family: var(--mono);
   font-size: 13px;
@@ -319,7 +319,7 @@ body {
 .set-row input::-webkit-inner-spin-button,
 .set-row input::-webkit-outer-spin-button { -webkit-appearance: none; }
 .set-row input::placeholder { color: var(--t15); }
-.set-row input:focus { outline: none; border-color: rgba(212,165,116,0.25); background: var(--t08); }
+.set-row input:focus { outline: none; border-color: rgba(212,165,116,0.4); background: var(--t08); }
 .set-row.done input {
   background: transparent;
   border-color: transparent;
@@ -617,7 +617,7 @@ body {
   cursor: pointer;
   transition: border-color 0.3s, background 0.3s;
 }
-.custom-select select:focus { outline: none; border-color: rgba(212,165,116,0.25); background: var(--t08); }
+.custom-select select:focus { outline: none; border-color: rgba(212,165,116,0.4); background: var(--t08); }
 .custom-select::after {
   content: '';
   position: absolute;
@@ -665,7 +665,7 @@ body {
 .bw-input::-webkit-inner-spin-button,
 .bw-input::-webkit-outer-spin-button { -webkit-appearance: none; }
 .bw-input::placeholder { color: var(--t15); }
-.bw-input:focus { outline: none; border-color: rgba(212,165,116,0.25); background: var(--t08); }
+.bw-input:focus { outline: none; border-color: rgba(212,165,116,0.4); background: var(--t08); }
 .bw-unit {
   font-family: var(--mono);
   font-size: 13px;
@@ -904,8 +904,8 @@ body {
   position: absolute;
   bottom: 6px;
 }
-.cal-day.has-workout::after { background: var(--warm); opacity: 0.7; }
-.cal-day.has-scheduled::after { background: var(--cool); opacity: 0.7; }
+.cal-day.has-workout::after { background: var(--warm); opacity: 0.9; }
+.cal-day.has-scheduled::after { background: var(--cool); opacity: 0.9; }
 .cal-day.has-workout.has-scheduled::after {
   width: 12px;
   height: 5px;
