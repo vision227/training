@@ -21,12 +21,12 @@
   --text: #e8e4df;
   --warm: #d4a574;
   --cool: #7b9db8;
-  --t90: rgba(232,228,223,0.92);
-  --t60: rgba(232,228,223,0.65);
-  --t35: rgba(232,228,223,0.5);
-  --t15: rgba(232,228,223,0.28);
-  --t08: rgba(232,228,223,0.12);
-  --t04: rgba(232,228,223,0.06);
+  --t90: rgba(232,228,223,0.95);
+  --t60: rgba(232,228,223,0.7);
+  --t35: rgba(232,228,223,0.55);
+  --t15: rgba(232,228,223,0.38);
+  --t08: rgba(232,228,223,0.15);
+  --t04: rgba(232,228,223,0.08);
   --w15: rgba(212,165,116,0.15);
   --w08: rgba(212,165,116,0.08);
   --danger: #c45c5c;
@@ -41,7 +41,6 @@ html, body {
   height: 100%;
   overflow: hidden;
   touch-action: manipulation;
-  -webkit-font-smoothing: antialiased;
 }
 body {
   display: flex;
@@ -71,14 +70,14 @@ body {
 }
 .tab {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--t35);
   background: none;
   border: none;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border-radius: 6px;
   cursor: pointer;
   transition: color 0.3s, background 0.3s;
@@ -102,7 +101,7 @@ body {
 /* ── Screen header ── */
 .page-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -116,15 +115,15 @@ body {
 .program-section:last-child { margin-bottom: 0; }
 .program-name {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t60);
   margin-bottom: 14px;
 }
 .program-sub {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -146,7 +145,7 @@ body {
 .card:active { background: var(--t04); border-color: var(--t15); }
 .card-day {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -157,14 +156,14 @@ body {
 .card-name {
   font-family: var(--display);
   font-size: 22px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t90);
   margin-bottom: 6px;
 }
 .card-sub {
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t35);
 }
@@ -179,42 +178,42 @@ body {
 }
 .w-back {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 1px;
   color: var(--t35);
   background: none;
   border: none;
-  padding: 10px 0;
+  padding: 12px 0;
   cursor: pointer;
   transition: color 0.2s;
 }
 .w-back:active { color: var(--t60); }
 .w-dur {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t15);
   min-width: 48px;
   text-align: right;
 }
 .aim {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
-  color: rgba(212,165,116,0.65);
+  color: rgba(212,165,116,0.75);
   margin-top: 2px;
   letter-spacing: 0;
 }
 .w-title {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t60);
 }
 .w-date {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 2px;
   color: var(--t35);
   text-align: center;
@@ -229,7 +228,7 @@ body {
 .pbar {
   height: 100%;
   background: var(--warm);
-  opacity: 0.5;
+  opacity: 0.7;
   border-radius: 1px;
   transition: width 0.5s cubic-bezier(0.25,0,0.15,1);
 }
@@ -244,16 +243,16 @@ body {
 }
 .ex-name {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--t35);
 }
 .ex-count {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t15);
 }
@@ -267,9 +266,9 @@ body {
 
 .set-row {
   display: grid;
-  grid-template-columns: 30px 50px 1fr 1fr 40px;
+  grid-template-columns: 32px 52px 1fr 1fr 48px;
   gap: 10px;
-  padding: 14px 16px;
+  padding: 16px 16px;
   align-items: center;
   position: relative;
   transition: background 0.4s;
@@ -288,16 +287,16 @@ body {
 
 .sn {
   font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--t35);
   text-align: center;
 }
 .set-row.done .sn { color: var(--warm); opacity: 0.7; }
 .st {
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   color: var(--t35);
   text-align: center;
   letter-spacing: 0.5px;
@@ -306,12 +305,12 @@ body {
 .set-row input[type="number"] {
   background: var(--t04);
   border: 1px solid var(--t08);
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--t90);
   font-family: var(--mono);
   font-size: 16px;
-  font-weight: 300;
-  padding: 11px 4px;
+  font-weight: 400;
+  padding: 12px 4px;
   width: 100%;
   text-align: center;
   transition: border-color 0.3s, background 0.3s;
@@ -324,17 +323,17 @@ body {
 .set-row.done input {
   background: transparent;
   border-color: transparent;
-  color: var(--t35);
+  color: var(--t60);
 }
 
 .ck {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1.5px solid var(--t15);
+  border: 2px solid var(--t15);
   background: none;
   color: transparent;
-  font-size: 13px;
+  font-size: 16px;
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -364,8 +363,8 @@ body {
   border-top: 1px solid var(--t08);
 }
 .set-ctrl {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--t08);
   background: var(--t04);
@@ -380,12 +379,12 @@ body {
 .set-ctrl.rm { color: var(--danger); }
 
 .ex-swap {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   color: var(--t15);
   border: none;
   background: none;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   padding: 0;
 }
@@ -398,13 +397,13 @@ body {
   gap: 8px;
 }
 .swap-opt {
-  padding: 9px 14px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
   border: 1px solid var(--t08);
   background: var(--t04);
   color: var(--t60);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   cursor: pointer;
 }
@@ -415,13 +414,13 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid var(--t08);
   background: var(--bg);
   color: var(--t35);
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -431,7 +430,7 @@ body {
 .kg-adj:active { background: var(--t08); color: var(--t60); }
 .kg-adj.dec { left: 2px; }
 .kg-adj.inc { right: 2px; }
-.kg-wrap input { padding-left: 22px; padding-right: 22px; }
+.kg-wrap input { padding-left: 26px; padding-right: 26px; }
 .set-row.done .kg-adj { display: none; }
 
 .rpe-bar {
@@ -443,7 +442,7 @@ body {
 }
 .rpe-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -451,14 +450,14 @@ body {
   margin-right: 2px;
 }
 .rpe-opt {
-  width: 34px;
-  height: 28px;
-  border-radius: 4px;
+  width: 38px;
+  height: 34px;
+  border-radius: 6px;
   border: 1px solid var(--t08);
   background: var(--t04);
   color: var(--t35);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   padding: 0;
   display: grid;
@@ -480,15 +479,15 @@ body {
 }
 .e1rm-val {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 400;
   color: var(--t60);
   letter-spacing: 0.5px;
 }
 .e1rm-sub {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   color: var(--t35);
   letter-spacing: 1px;
   margin-top: 2px;
@@ -501,7 +500,7 @@ body {
   border-radius: 10px;
   padding: 18px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -559,7 +558,7 @@ body {
 .t-time.warn { color: var(--danger); }
 .t-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -568,7 +567,7 @@ body {
 }
 .t-skip {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -608,9 +607,9 @@ body {
   color: var(--t90);
   border: 1px solid var(--t08);
   border-radius: 10px;
-  padding: 14px 40px 14px 16px;
+  padding: 16px 40px 16px 16px;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 1px;
   -webkit-appearance: none;
@@ -642,7 +641,7 @@ body {
 }
 .bw-label {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -656,8 +655,8 @@ body {
   border-radius: 10px;
   color: var(--t90);
   font-family: var(--mono);
-  font-size: 15px;
-  font-weight: 300;
+  font-size: 16px;
+  font-weight: 400;
   padding: 12px 16px;
   text-align: left;
   transition: border-color 0.3s, background 0.3s;
@@ -669,8 +668,8 @@ body {
 .bw-input:focus { outline: none; border-color: rgba(212,165,116,0.25); background: var(--t08); }
 .bw-unit {
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   color: var(--t35);
   letter-spacing: 1px;
   flex-shrink: 0;
@@ -692,7 +691,7 @@ body {
 }
 .bench-header span {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -710,15 +709,15 @@ body {
 .bench-row + .bench-row { border-top: 1px solid var(--t04); }
 .bench-lift {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--t60);
   letter-spacing: 0.3px;
 }
 .bench-val {
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   color: var(--t35);
   text-align: center;
   letter-spacing: 0.3px;
@@ -749,7 +748,7 @@ body {
 
 .stat-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -783,15 +782,15 @@ body {
 }
 .pr-val {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 400;
   color: var(--t90);
   letter-spacing: 0.5px;
 }
 .pr-date {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   color: var(--t35);
   letter-spacing: 1px;
   margin-top: 2px;
@@ -799,9 +798,9 @@ body {
 
 .h-table { width: 100%; border-collapse: collapse; }
 .h-table td {
-  padding: 12px 0;
+  padding: 14px 0;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.5px;
 }
 .h-table tr + tr td { border-top: 1px solid var(--t08); }
@@ -811,8 +810,8 @@ body {
 .empty {
   text-align: center;
   padding: 48px 20px;
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t35);
   line-height: 1.7;
@@ -832,8 +831,8 @@ body {
   margin-bottom: 16px;
 }
 .cal-nav-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   border: 1px solid var(--t08);
   background: var(--t04);
@@ -847,8 +846,8 @@ body {
 .cal-nav-btn:active { background: var(--t08); border-color: var(--t15); }
 .cal-month-title {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 400;
   letter-spacing: 1px;
   color: var(--t60);
 }
@@ -860,7 +859,7 @@ body {
 }
 .cal-dow span {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -883,8 +882,8 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--t35);
   cursor: pointer;
   position: relative;
@@ -922,23 +921,23 @@ body {
 }
 .cal-detail-title {
   font-family: var(--display);
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 400;
   color: var(--t60);
   margin-bottom: 4px;
 }
 .cal-detail-sub {
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   color: var(--t35);
   letter-spacing: 1px;
   margin-bottom: 12px;
 }
 .cal-detail-exercises {
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
   color: var(--t35);
   line-height: 1.8;
 }
@@ -949,7 +948,7 @@ body {
 }
 .cal-btn {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -968,10 +967,10 @@ body {
   background: rgba(123,157,184,0.1);
   border: 1px solid rgba(123,157,184,0.15);
   border-radius: 10px;
-  padding: 12px 16px;
+  padding: 14px 16px;
   margin-bottom: 16px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 1px;
   color: var(--cool);
@@ -981,7 +980,7 @@ body {
 }
 .cal-move-cancel {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1002,9 +1001,9 @@ body {
   color: var(--t90);
   border: 1px solid var(--t08);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 1px;
   -webkit-appearance: none;
