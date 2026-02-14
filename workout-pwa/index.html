@@ -1158,6 +1158,68 @@ const PROGRAMS = [
         ]
       }
     ]
+  },
+  {
+    id: 'hit', name: 'Mentzer High Intensity',
+    workouts: [
+      {
+        id: 'hit-a', day: 'Day 1', title: 'Chest & Back', sub: 'Pre-exhaust supersets · 1 set to failure',
+        exercises: [
+          { name: 'Dumbbell Flyes', sets: [
+            { target: '6–10', rest: 0 }
+          ]},
+          { name: 'Incline Barbell Bench Press', sets: [
+            { target: '6–10', rest: 180 }
+          ]},
+          { name: 'Lat Pulldowns', sets: [
+            { target: '6–10', rest: 0 }
+          ]},
+          { name: 'Reverse Grip Lat Pulldowns', sets: [
+            { target: '6–10', rest: 180 }
+          ]},
+          { name: 'Conventional Deadlifts', sets: [
+            { target: '5–8', rest: 240 }
+          ]}
+        ]
+      },
+      {
+        id: 'hit-b', day: 'Day 2', title: 'Legs', sub: 'Pre-exhaust superset · 1 set to failure',
+        exercises: [
+          { name: 'Leg Extensions', sets: [
+            { target: '6–10', rest: 0 }
+          ]},
+          { name: 'Leg Press', sets: [
+            { target: '6–10', rest: 180 }
+          ]},
+          { name: 'Leg Curls', sets: [
+            { target: '6–10', rest: 120 }
+          ]},
+          { name: 'Standing Calf Raises', sets: [
+            { target: '10–15', rest: 90 }
+          ]}
+        ]
+      },
+      {
+        id: 'hit-c', day: 'Day 3', title: 'Shoulders & Arms', sub: 'Delts, Bis & Tris · 1 set to failure',
+        exercises: [
+          { name: 'Lateral Raises', sets: [
+            { target: '6–10', rest: 120 }
+          ]},
+          { name: 'Bent-Over Rear Delt Flyes', sets: [
+            { target: '10–12', rest: 90 }
+          ]},
+          { name: 'Barbell Curls', sets: [
+            { target: '6–10', rest: 120 }
+          ]},
+          { name: 'Tricep Bar Pushdowns', sets: [
+            { target: '6–10', rest: 0 }
+          ]},
+          { name: 'Dips', sets: [
+            { target: '6–10', rest: 180 }
+          ]}
+        ]
+      }
+    ]
   }
 ];
 const WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
@@ -1175,6 +1237,17 @@ const ALTS = {
   'Weighted Chin-ups': ['Lat Pulldowns', 'Pull-ups', 'Cable Rows', 'Seated Cable Rows', 'T-Bar Rows', 'DB Rows', 'Machine Rows'],
   'Bent-Over Rear Delt Flyes': ['Face Pulls', 'Reverse Pec Deck', 'Cable Rear Delts', 'Band Pull-Aparts'],
   'Incline Dumbbell Curls': ['Standing DB Curls', 'Preacher Curls', 'Concentration Curls', 'Spider Curls', 'Machine Curls'],
+  'Dumbbell Flyes': ['Cable Flyes', 'Pec Deck', 'Incline DB Flyes', 'Machine Chest Press'],
+  'Conventional Deadlifts': ['Romanian Deadlifts', 'Trap Bar Deadlifts', 'Good Mornings', 'Back Extensions'],
+  'Lat Pulldowns': ['Weighted Chin-ups', 'Pull-ups', 'Cable Rows', 'Seated Cable Rows', 'Machine Rows'],
+  'Reverse Grip Lat Pulldowns': ['Lat Pulldowns', 'Weighted Chin-ups', 'Seated Cable Rows', 'DB Rows'],
+  'Leg Extensions': ['Sissy Squats', 'Goblet Squats', 'Smith Machine Squats'],
+  'Leg Press': ['Barbell Squats', 'Hack Squat', 'Smith Machine Squats', 'Goblet Squats'],
+  'Leg Curls': ['Seated Leg Curls', 'Romanian Deadlifts', 'Good Mornings', 'Nordic Curls'],
+  'Standing Calf Raises': ['Seated Calf Raises', 'Leg Press Calf Raises', 'Smith Machine Calf Raises'],
+  'Barbell Curls': ['EZ-Bar Curls', 'Hammer Curls', 'Cable Curls', 'Standing DB Curls'],
+  'Tricep Bar Pushdowns': ['Triceps Rope Pushdowns', 'Overhead Tricep Extension', 'Skull Crushers', 'Close-Grip Bench Press'],
+  'Dips': ['Diamond Push-ups', 'Close-Grip Bench Press', 'Tricep Dips', 'Overhead Tricep Extension'],
 };
 
 const STEP = {
@@ -1188,6 +1261,12 @@ const STEP = {
   'Cable Pull-Throughs': 2.5, 'Back Extensions': 2.5,
   'Machine Shoulder Press': 2.5, 'Smith Machine OHP': 2.5,
   'Seated Cable Rows': 2.5, 'T-Bar Rows': 2.5, 'DB Rows': 2, 'Machine Rows': 2.5,
+  'Dumbbell Flyes': 2, 'Incline DB Flyes': 2,
+  'Conventional Deadlifts': 2.5, 'Trap Bar Deadlifts': 2.5,
+  'Reverse Grip Lat Pulldowns': 2.5, 'Barbell Curls': 2.5,
+  'Tricep Bar Pushdowns': 2.5, 'Dips': 2.5,
+  'Leg Extensions': 2.5, 'Leg Curls': 2.5, 'Seated Leg Curls': 2.5,
+  'Standing Calf Raises': 2.5, 'Standing Barbell OHP': 2.5,
 };
 
 function goalFor(name, si, prev, target) {
@@ -1433,6 +1512,7 @@ function updProg() {
 
 // Timer
 function startTmr(sec, name, si) {
+  if (!sec) return;
   let rem = sec; const tot = sec;
   $('timer').classList.add('on');
   $('tInfo').textContent = 'set ' + (si + 1) + ' · ' + name.toLowerCase();
