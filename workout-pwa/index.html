@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Train</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,6 +120,66 @@ body {
   font-size: 18px;
   cursor: pointer;
   padding: 0 4px;
+}
+
+/* ── Install guide ── */
+.install-guide {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 32px;
+  text-align: center;
+}
+.install-guide-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+}
+.install-guide h2 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--t90);
+  margin: 0;
+}
+.install-guide p {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t60);
+  line-height: 1.6;
+  max-width: 300px;
+}
+.install-guide .step-icon {
+  display: inline-block;
+  font-size: 16px;
+  vertical-align: middle;
+}
+.install-guide-btn {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--warm);
+  background: var(--w08);
+  border: 1px solid var(--w15);
+  border-radius: 8px;
+  padding: 12px 32px;
+  cursor: pointer;
+}
+.install-guide-dismiss {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--t35);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
 }
 
 /* ── Screen header ── */
@@ -2168,7 +2228,59 @@ $('schedDismiss').addEventListener('click', () => {
   $('schedBanner').style.display = 'none';
 });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkSchedBanner(); });
+
+// Install guide
+(function() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (isStandalone || localStorage.getItem('installDismissed')) return;
+
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  const guide = $('installGuide');
+  if (!guide) return;
+
+  // Android: intercept the native prompt
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  const iosSteps = 'Tap <span class="step-icon">&#xFEFF;&#x1F4E4;</span> (Share) in the toolbar, then scroll down and tap <strong>"Add to Home Screen"</strong>';
+  const androidSteps = 'Tap the <strong>install</strong> button below to add Train to your home screen';
+  const defaultSteps = 'Open your browser menu and look for <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>';
+
+  $('installSteps').innerHTML = isIOS ? iosSteps : (deferredPrompt ? androidSteps : defaultSteps);
+  guide.style.display = 'flex';
+
+  // Re-check after a short delay for beforeinstallprompt
+  if (!isIOS) {
+    setTimeout(() => {
+      if (deferredPrompt) {
+        $('installSteps').innerHTML = androidSteps;
+        $('installBtn').style.display = '';
+      }
+    }, 500);
+  }
+
+  $('installBtn').addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => { guide.style.display = 'none'; });
+    }
+  });
+  $('installDismiss').addEventListener('click', () => {
+    localStorage.setItem('installDismissed', '1');
+    guide.style.display = 'none';
+  });
+})();
 </script>
+<div id="installGuide" class="install-guide" style="display:none">
+  <img class="install-guide-icon" src="icon-192.png" alt="Train">
+  <h2>Install Train</h2>
+  <p id="installSteps"></p>
+  <button class="install-guide-btn" id="installBtn" style="display:none">Install</button>
+  <button class="install-guide-dismiss" id="installDismiss">continue in browser</button>
+</div>
 <div id="updateBanner" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:var(--display);color:var(--text);" onclick="window.location.reload()">
   <div style="font-size:18px;font-weight:500;">Update available</div>
   <div style="font-size:14px;opacity:0.7;">Tap anywhere to refresh</div>
