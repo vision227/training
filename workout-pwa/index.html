@@ -1249,6 +1249,17 @@ body {
   <button class="tab" data-t="stats">stats</button>
 </nav>
 
+<div id="installGuide" class="install-guide" style="display:none">
+  <img class="install-guide-icon" src="icon-192.png" alt="Train">
+  <h2>Install Train</h2>
+  <p id="installSteps"></p>
+  <button class="install-guide-btn" id="installBtn" style="display:none">Install</button>
+</div>
+<div id="updateBanner" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:var(--display);color:var(--text);" onclick="window.location.reload()">
+  <div style="font-size:18px;font-weight:500;">Update available</div>
+  <div style="font-size:14px;opacity:0.7;">Tap anywhere to refresh</div>
+</div>
+
 <script>
 const PROGRAMS = [
   {
@@ -2260,15 +2271,5 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
   });
 })();
 </script>
-<div id="installGuide" class="install-guide" style="display:none">
-  <img class="install-guide-icon" src="icon-192.png" alt="Train">
-  <h2>Install Train</h2>
-  <p id="installSteps"></p>
-  <button class="install-guide-btn" id="installBtn" style="display:none">Install</button>
-</div>
-<div id="updateBanner" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:var(--display);color:var(--text);" onclick="window.location.reload()">
-  <div style="font-size:18px;font-weight:500;">Update available</div>
-  <div style="font-size:14px;opacity:0.7;">Tap anywhere to refresh</div>
-</div>
 </body>
 </html>
