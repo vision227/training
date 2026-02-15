@@ -19,6 +19,9 @@ self.addEventListener('activate', e => {
     )
   );
   self.clients.claim();
+  self.clients.matchAll().then(clients => {
+    clients.forEach(c => c.postMessage({ type: 'SW_UPDATED' }));
+  });
 });
 
 self.addEventListener('fetch', e => {
