@@ -537,85 +537,85 @@ body {
   margin-top: 16px;
 }
 .finish:active { background: rgba(212,165,116,0.22); }
+.finish { margin-bottom: 48px; }
 
 /* ── Timer ── */
-.timer-overlay {
+.timer-bar {
   position: fixed;
-  inset: 0;
-  background: var(--bg);
+  left: 0; right: 0;
+  bottom: calc(52px + env(safe-area-inset-bottom));
   z-index: 200;
   display: none;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding-top: env(safe-area-inset-top);
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(20,20,24,0.95);
+  border-top: 1px solid var(--t08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
-.timer-overlay.on { display: flex; animation: fadeIn 0.4s ease; }
+.timer-bar.on { display: flex; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.t-glow {
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,165,116,0.1) 0%, transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-  transition: opacity 2s ease;
+.t-bar-progress {
+  flex: 1;
+  height: 3px;
+  background: var(--t04);
+  border-radius: 2px;
+  overflow: hidden;
 }
-.t-ring {
-  position: relative;
-  width: 260px;
-  height: 260px;
+.t-bar-fill {
+  height: 100%;
+  background: var(--warm);
+  border-radius: 2px;
+  transition: width 1s linear, background-color 0.5s ease;
 }
-.t-ring canvas { width: 260px; height: 260px; }
+.t-bar-fill.warn { background: var(--danger); }
+
 .t-time {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
   font-family: var(--mono);
-  font-size: 56px;
-  font-weight: 300;
-  letter-spacing: 2px;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: var(--t90);
-  transition: color 1s ease;
   font-variant-numeric: tabular-nums;
+  min-width: 48px;
 }
 .t-time.warn { color: var(--danger); }
 .t-label {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--t35);
-  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 .t-skip {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--t35);
   background: none;
   border: 1px solid var(--t08);
-  border-radius: 6px;
-  padding: 12px 28px;
+  border-radius: 4px;
+  padding: 6px 12px;
   cursor: pointer;
-  margin-top: 12px;
   transition: color 0.2s, border-color 0.2s;
 }
 .t-skip:active { color: var(--t60); border-color: var(--t15); }
 
-.t-ring.pulse .t-glow {
-  animation: glowPulse 1.2s ease-in-out infinite;
+.timer-bar.pulse .t-bar-fill {
+  animation: barPulse 1.2s ease-in-out infinite;
 }
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+@keyframes barPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* ── Stats ── */
@@ -1112,12 +1112,9 @@ body {
   <div class="cal-detail" id="calDetail"></div>
 </div>
 
-<div class="timer-overlay" id="timer">
-  <div class="t-ring" id="tRing">
-    <div class="t-glow"></div>
-    <canvas id="tCanvas" width="520" height="520"></canvas>
-    <div class="t-time" id="tTime">3:00</div>
-  </div>
+<div class="timer-bar" id="timer">
+  <div class="t-time" id="tTime">3:00</div>
+  <div class="t-bar-progress"><div class="t-bar-fill" id="tFill"></div></div>
   <div class="t-label" id="tInfo"></div>
   <button class="t-skip" id="tSkip">skip</button>
 </div>
@@ -1142,7 +1139,7 @@ const PROGRAMS = [
           { name: 'Standing Barbell Curls', sets: [
             { target: '4–6', rest: 180 }, { target: '6–8', rest: 180 }, { target: '8–10', rest: 120 }
           ]},
-          { name: 'Triceps Rope Pushdowns', sets: [
+          { name: 'Tricep Bar Pushdowns', sets: [
             { target: '6–8', rest: 180 }, { target: '8–10', rest: 180 }, { target: '10–12', rest: 120 }
           ]},
           { name: 'Lateral Raises', sets: [
@@ -1254,7 +1251,6 @@ const WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
 const ALTS = {
   'Incline Barbell Bench Press': ['Flat Barbell Bench Press', 'Incline DB Press', 'Flat DB Press', 'Cable Flyes', 'Machine Chest Press', 'Dips'],
   'Standing Barbell Curls': ['EZ-Bar Curls', 'Hammer Curls', 'Cable Curls', 'Machine Curls', 'Reverse Curls'],
-  'Triceps Rope Pushdowns': ['Overhead Tricep Extension', 'Skull Crushers', 'Close-Grip Bench Press', 'Tricep Dips', 'Diamond Push-ups'],
   'Lateral Raises': ['Cable Lateral Raises', 'Machine Lateral Raises', 'DB Front Raises', 'Upright Rows'],
   'Bulgarian Split Squats': ['Barbell Squats', 'Leg Press', 'Lunges', 'Goblet Squats', 'Hack Squat', 'Leg Extensions', 'Smith Machine Squats'],
   'Romanian Deadlifts': ['Conventional Deadlifts', 'Good Mornings', 'Hip Thrusts', 'Leg Curls', 'Seated Leg Curls', 'Cable Pull-Throughs', 'Back Extensions'],
@@ -1375,7 +1371,7 @@ function startW(id) {
     exercises: w.exercises.map(ex => {
       const ls = lastSets(id, ex.name);
       return {
-        name: ex.name,
+        name: ex.name, origName: ex.name,
         sets: ex.sets.map((s, i) => ({
           target: s.target, rest: s.rest, kg: (ls[i] && ls[i].kg) || '', reps: (ls[i] && ls[i].reps) || '', done: false
         }))
@@ -1430,15 +1426,19 @@ function renderW() {
       <div class="ex-section${isSSStart ? ' ss-start' : ''}${isSSEnd ? ' ss-end' : ''}"
         <div class="ex-header">
           <span class="ex-name" style="flex:1">${ex.name}</span>
-          ${ALTS[ex.name] ? `<button class="ex-swap" data-e="${ei}">\u21C4</button>` : ''}
+          ${ALTS[ex.origName || ex.name] ? `<button class="ex-swap" data-e="${ei}">\u21C4</button>` : ''}
           <span class="ex-count ${dn === tot ? 'done' : ''}">${dn}/${tot}</span>
         </div>
         <div class="ex-card">
-          ${ALTS[ex.name] ? `<div class="swap-panel" id="swap-${ei}" style="display:none">
-            ${ALTS[ex.name].map(alt =>
-              `<button class="swap-opt" data-e="${ei}" data-alt="${alt}">${alt}</button>`
-            ).join('')}
-          </div>` : ''}
+          ${ALTS[ex.origName || ex.name] ? (() => {
+            const base = ex.origName || ex.name;
+            const opts = [base, ...ALTS[base]].filter(a => a !== ex.name);
+            return `<div class="swap-panel" id="swap-${ei}" style="display:none">
+              ${opts.map(alt =>
+                `<button class="swap-opt" data-e="${ei}" data-alt="${alt}">${alt}</button>`
+              ).join('')}
+            </div>`;
+          })() : ''}
           ${ex.sets.map((s, si) => { const goal = !s.done ? goalFor(ex.name, si, prev, s.target) : null; return `
             <div class="set-row ${s.done ? 'done' : ''}" data-e="${ei}" data-s="${si}">
               <div class="sn">${si + 1}</div>
@@ -1546,13 +1546,13 @@ function startTmr(sec, name, si) {
   if (!sec) return;
   let rem = sec; const tot = sec;
   $('timer').classList.add('on');
+  $('timer').classList.remove('pulse');
   $('tInfo').textContent = 'set ' + (si + 1) + ' · ' + name.toLowerCase();
-  $('tRing').classList.remove('pulse');
   updTmr(rem, tot);
   clearInterval(tmrId);
   tmrId = setInterval(() => {
     rem--;
-    if (rem <= 10) $('tRing').classList.add('pulse');
+    if (rem <= 10) $('timer').classList.add('pulse');
     updTmr(rem, tot);
     if (rem <= 0) { clearInterval(tmrId); tmrId = null; tmrDone(); }
   }, 1000);
@@ -1561,28 +1561,14 @@ function startTmr(sec, name, si) {
 function updTmr(r, t) {
   $('tTime').textContent = `${String(Math.floor(r / 60)).padStart(2, ' ')}:${(r % 60).toString().padStart(2, '0')}`;
   $('tTime').classList.toggle('warn', r <= 10);
-  drawRing(r / t, r <= 10);
-}
-
-function drawRing(f, warning) {
-  const c = $('tCanvas').getContext('2d');
-  const s = 520, cx = s / 2, cy = s / 2, r = 225;
-  c.clearRect(0, 0, s, s);
-  // track
-  c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2);
-  c.strokeStyle = 'rgba(232,228,223,0.06)'; c.lineWidth = 1.5; c.stroke();
-  // progress
-  if (f > 0) {
-    c.beginPath(); c.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * f);
-    c.strokeStyle = warning ? 'rgba(196,92,92,0.7)' : 'rgba(212,165,116,0.5)';
-    c.lineWidth = 1.5; c.lineCap = 'round'; c.stroke();
-  }
+  $('tFill').style.width = (t ? r / t * 100 : 0) + '%';
+  $('tFill').classList.toggle('warn', r <= 10);
 }
 
 function tmrDone() {
   if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
   beep();
-  setTimeout(() => { $('timer').classList.remove('on'); $('tRing').classList.remove('pulse'); }, 1200);
+  setTimeout(() => { $('timer').classList.remove('on'); $('timer').classList.remove('pulse'); }, 1200);
 }
 
 function beep() {
@@ -1598,7 +1584,7 @@ function beep() {
 
 $('tSkip').addEventListener('click', () => {
   clearInterval(tmrId); tmrId = null;
-  $('timer').classList.remove('on'); $('tRing').classList.remove('pulse');
+  $('timer').classList.remove('on'); $('timer').classList.remove('pulse');
 });
 
 // Back / Finish
@@ -1611,14 +1597,20 @@ $('finishBtn').addEventListener('click', () => {
   if (!session) return;
   clearInterval(window._durId);
   const h = db.hist();
-  h.push({
+  const entry = {
     date: session.date, wid: session.wid,
     duration: session.startedAt ? Math.round((Date.now() - session.startedAt) / 1000) : null,
     exercises: session.exercises.map(ex => ({
       name: ex.name,
       sets: ex.sets.map(s => ({ kg: parseFloat(s.kg) || 0, reps: parseInt(s.reps) || 0, rpe: s.rpe || null }))
     }))
-  });
+  };
+  if (session.editIdx != null) {
+    entry.duration = h[session.editIdx].duration;
+    h[session.editIdx] = entry;
+  } else {
+    h.push(entry);
+  }
   db.saveHist(h);
   session = null; db.saveSess(null);
   $('workout').classList.remove('on'); $('home').classList.add('on');
@@ -1911,6 +1903,7 @@ function renderCalDetail() {
       <div class="cal-detail-sub">${fmtDate(h.date)}${durStr}</div>
       <div class="cal-detail-exercises">${exSummary}</div>
       <div class="cal-actions">
+        <button class="cal-btn" onclick="editWorkout('${h.date}')">edit</button>
         <button class="cal-btn" onclick="moveWorkout('${h.date}','hist')">move</button>
       </div>
     </div>`;
@@ -1967,6 +1960,32 @@ function schedFromSelect() {
   if (sel && calSelected) schedWorkout(calSelected, sel.value);
 }
 
+function editWorkout(date) {
+  if (session && !confirm('You have an active session. Discard it to edit this workout?')) return;
+  const hist = db.hist();
+  const idx = hist.findIndex(h => h.date === date);
+  if (idx === -1) return;
+  const h = hist[idx];
+  const w = WORKOUTS.find(x => x.id === h.wid);
+  if (!w) return;
+  session = {
+    wid: h.wid, date: h.date, startedAt: null, editIdx: idx,
+    exercises: h.exercises.map((ex, ei) => {
+      const tmpl = w.exercises[ei];
+      return {
+        name: ex.name, origName: tmpl ? tmpl.name : ex.name,
+        sets: ex.sets.map((s, si) => ({
+          target: tmpl && tmpl.sets[si] ? tmpl.sets[si].target : '',
+          rest: tmpl && tmpl.sets[si] ? tmpl.sets[si].rest : 0,
+          kg: s.kg || '', reps: s.reps || '', rpe: s.rpe || null, done: true
+        }))
+      };
+    })
+  };
+  db.saveSess(session);
+  show('home');
+}
+
 function moveWorkout(date, type) {
   moveSource = { date, type };
   renderCal();
@@ -2014,7 +2033,21 @@ renderCards();
 const saved = db.sess();
 if (saved) { session = saved; renderW(); }
 $('exSel').innerHTML = allEx().map(n => `<option>${n}</option>`).join('');
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+          document.getElementById('updateBanner').style.display = 'flex';
+        }
+      });
+    });
+  }).catch(() => {});
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
 
 function checkNotify() {
   if (!('Notification' in window)) return;
@@ -2044,5 +2077,9 @@ function fireNotify(scheds) {
 checkNotify();
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkNotify(); });
 </script>
+<div id="updateBanner" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:var(--display);color:var(--text);" onclick="window.location.reload()">
+  <div style="font-size:18px;font-weight:500;">Update available</div>
+  <div style="font-size:14px;opacity:0.7;">Tap anywhere to refresh</div>
+</div>
 </body>
 </html>

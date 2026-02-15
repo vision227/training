@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rpt-tracker-v2';
+const CACHE_NAME = 'rpt-tracker-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,21 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // Network-first for navigation (HTML) so deploys take effect immediately
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Cache-first for everything else
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
