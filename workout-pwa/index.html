@@ -64,7 +64,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 6px;
-  padding: 14px 20px calc(env(safe-area-inset-bottom, 12px) + 14px);
+  padding: 14px 20px calc(env(safe-area-inset-bottom, 16px) + 20px);
   border-top: 1px solid var(--t08);
   flex-shrink: 0;
 }
@@ -1150,6 +1150,45 @@ body {
   padding: 10px 10px;
 }
 .ep-ex-name:focus { outline: none; border-color: rgba(212,165,116,0.4); }
+
+.ep-ss-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 2px;
+  margin: -2px 0;
+  cursor: pointer;
+}
+.ep-ss-toggle::before, .ep-ss-toggle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--t08);
+}
+.ep-ss-toggle span {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t15);
+  white-space: nowrap;
+  padding: 6px 12px;
+  border: 1px dashed var(--t08);
+  border-radius: 6px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.ep-ss-toggle:active span { border-color: var(--t15); }
+.ep-ss-toggle.on::before, .ep-ss-toggle.on::after {
+  background: var(--warm);
+  opacity: 0.25;
+}
+.ep-ss-toggle.on span {
+  color: var(--warm);
+  border-color: rgba(212,165,116,0.25);
+  border-style: solid;
+  background: var(--w08);
+}
 
 /* ── Animations ── */
 @keyframes fadeUp {
@@ -2833,6 +2872,12 @@ function renderEditWorkout(p, wi) {
   html += `<div class="ep-label">exercises</div>`;
 
   w.exercises.forEach((ex, ei) => {
+    // superset toggle between exercises
+    if (ei > 0) {
+      const prevEx = w.exercises[ei - 1];
+      const isSS = prevEx.sets.every(s => !s.rest);
+      html += `<div class="ep-ss-toggle ${isSS ? 'on' : ''}" data-ss-after="${ei - 1}"><span>${isSS ? 'superset' : 'superset'}</span></div>`;
+    }
     html += `<div class="ep-ex-card">
       <div class="ep-ex-header">
         <input class="ep-ex-name" data-ei="${ei}" value="${ex.name}">
@@ -2924,6 +2969,17 @@ function renderEditWorkout(p, wi) {
     w.exercises.push({ name: 'New Exercise', sets: [{ target: '8-10', rest: 120 }] });
     refreshPrograms();
     renderEditWorkout(p, wi);
+  });
+
+  $('epContent').querySelectorAll('.ep-ss-toggle').forEach(el => {
+    el.addEventListener('click', () => {
+      const ei = +el.dataset.ssAfter;
+      const ex = w.exercises[ei];
+      const isSS = ex.sets.every(s => !s.rest);
+      ex.sets.forEach(s => { s.rest = isSS ? 120 : 0; });
+      refreshPrograms();
+      renderEditWorkout(p, wi);
+    });
   });
 }
 
