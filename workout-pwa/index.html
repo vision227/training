@@ -127,7 +127,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 9998;
-  background: rgba(0,0,0,0.92);
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,16 +170,6 @@ body {
   border-radius: 8px;
   padding: 12px 32px;
   cursor: pointer;
-}
-.install-guide-dismiss {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: var(--t35);
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-top: 4px;
 }
 
 /* ── Screen header ── */
@@ -2232,7 +2222,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
 // Install guide
 (function() {
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-  if (isStandalone || localStorage.getItem('installDismissed')) return;
+  if (isStandalone) return;
 
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
   const guide = $('installGuide');
@@ -2268,10 +2258,6 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
       deferredPrompt.userChoice.then(() => { guide.style.display = 'none'; });
     }
   });
-  $('installDismiss').addEventListener('click', () => {
-    localStorage.setItem('installDismissed', '1');
-    guide.style.display = 'none';
-  });
 })();
 </script>
 <div id="installGuide" class="install-guide" style="display:none">
@@ -2279,7 +2265,6 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
   <h2>Install Train</h2>
   <p id="installSteps"></p>
   <button class="install-guide-btn" id="installBtn" style="display:none">Install</button>
-  <button class="install-guide-dismiss" id="installDismiss">continue in browser</button>
 </div>
 <div id="updateBanner" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:var(--display);color:var(--text);" onclick="window.location.reload()">
   <div style="font-size:18px;font-weight:500;">Update available</div>
