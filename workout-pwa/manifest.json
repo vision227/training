@@ -1,6 +1,6 @@
 {
-  "name": "RPT Workout Tracker",
-  "short_name": "RPT Tracker",
+  "name": "Train",
+  "short_name": "Train",
   "description": "Track your 3-day Reverse Pyramid Training program",
   "start_url": "./index.html",
   "display": "standalone",
