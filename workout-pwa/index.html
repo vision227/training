@@ -64,13 +64,13 @@ body {
   display: flex;
   justify-content: center;
   gap: 6px;
-  padding: 12px 20px calc(env(safe-area-inset-bottom, 8px) + 6px);
+  padding: 14px 20px calc(env(safe-area-inset-bottom, 12px) + 14px);
   border-top: 1px solid var(--t08);
   flex-shrink: 0;
 }
 .tab {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -81,10 +81,22 @@ body {
   border-radius: 6px;
   cursor: pointer;
   transition: color 0.3s, background 0.3s;
+  position: relative;
 }
 .tab.on {
   color: var(--t90);
   background: rgba(255,255,255,0.07);
+}
+.tab.on::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--warm);
 }
 
 /* ── Screens ── */
@@ -210,13 +222,13 @@ body {
   border-radius: 10px;
   padding: 22px 20px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s ease;
   animation: fadeUp 1.2s cubic-bezier(0.25,0,0.15,1) both;
 }
 .card:nth-child(1) { animation-delay: 0.15s; }
 .card:nth-child(2) { animation-delay: 0.25s; }
 .card:nth-child(3) { animation-delay: 0.35s; }
-.card:active { background: var(--t04); border-color: var(--t15); }
+.card:active { background: var(--t04); border-color: var(--t15); transform: scale(0.98); }
 .card-day {
   font-family: var(--mono);
   font-size: 11px;
@@ -304,7 +316,8 @@ body {
   background: var(--warm);
   opacity: 0.7;
   border-radius: 1px;
-  transition: width 0.5s cubic-bezier(0.25,0,0.15,1);
+  transition: width 0.5s cubic-bezier(0.25,0,0.15,1), box-shadow 0.5s ease;
+  box-shadow: 0 0 6px rgba(212,165,116,0.3), 0 0 14px rgba(212,165,116,0.15);
 }
 
 /* ── Exercise sections ── */
@@ -338,9 +351,10 @@ body {
 .ex-section.ss-end .ex-card { border-top-left-radius: 0; border-top-right-radius: 0; }
 .ex-header {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
+  gap: 8px;
   padding: 0 2px 8px;
+  min-width: 0;
 }
 .ex-name {
   font-family: var(--mono);
@@ -349,6 +363,10 @@ body {
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--t35);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 .ex-count {
   font-family: var(--mono);
@@ -356,6 +374,8 @@ body {
   font-weight: 400;
   letter-spacing: 1px;
   color: var(--t15);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .ex-count.done { color: var(--warm); opacity: 0.85; }
 
@@ -484,6 +504,7 @@ body {
   height: 44px;
   color: var(--t15);
   border: none;
+  flex-shrink: 0;
   background: none;
   font-size: 18px;
   cursor: pointer;
@@ -534,63 +555,26 @@ body {
 .kg-wrap input { padding-left: 20px; padding-right: 20px; }
 .set-row.done .kg-adj { display: none; }
 
-.rpe-bar {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 6px;
-}
-.rpe-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--t15);
-  margin-right: 2px;
-}
-.rpe-opt {
-  width: 38px;
-  height: 34px;
-  border-radius: 6px;
-  border: 1px solid var(--t08);
-  background: var(--t04);
-  color: var(--t35);
-  font-family: var(--mono);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 0;
-  display: grid;
-  place-items: center;
-}
-.rpe-opt:active { background: var(--t08); }
-.rpe-opt.on { background: var(--w15); border-color: rgba(212,165,116,0.2); color: var(--warm); }
-
 .ck.on:active { transform: scale(0.88); opacity: 0.7; }
 
-.e1rm-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid var(--t08);
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-bottom: 24px;
+.pr-e1rm {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
 }
-.e1rm-val {
+.pr-e1rm-val {
   font-family: var(--display);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   color: var(--t60);
   letter-spacing: 0.5px;
 }
-.e1rm-sub {
+.pr-e1rm-sub {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
   color: var(--t35);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   margin-top: 2px;
 }
 
@@ -613,11 +597,87 @@ body {
 .finish:active { background: rgba(212,165,116,0.22); }
 .finish { margin-bottom: 48px; }
 
+/* ── Summary overlay ── */
+#summary {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+.sum-icon {
+  font-size: 48px;
+  line-height: 1;
+  animation: pop 0.5s cubic-bezier(0.25,0,0.15,1) 0.1s both;
+}
+.sum-title {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--t90);
+  letter-spacing: 1px;
+}
+.sum-stats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.sum-stat {
+  text-align: center;
+}
+.sum-stat-val {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--warm);
+  letter-spacing: 0.5px;
+}
+.sum-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t35);
+  margin-top: 4px;
+}
+.sum-pr {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--warm);
+  background: var(--w08);
+  border: 1px solid rgba(212,165,116,0.1);
+  border-radius: 8px;
+  padding: 10px 20px;
+  letter-spacing: 0.5px;
+}
+.sum-dismiss {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t35);
+  background: none;
+  border: none;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.sum-dismiss:active { color: var(--t60); }
+
 /* ── Timer ── */
 .timer-bar {
   position: fixed;
   left: 0; right: 0;
-  bottom: calc(52px + env(safe-area-inset-bottom));
+  bottom: calc(58px + env(safe-area-inset-bottom));
   z-index: 200;
   display: none;
   align-items: center;
@@ -750,32 +810,41 @@ body {
   color: var(--t35);
   flex-shrink: 0;
 }
-.bw-input {
+.bw-stepper {
   flex: 1;
+  display: flex;
+  align-items: center;
   background: var(--t04);
   border: 1px solid var(--t08);
   border-radius: 10px;
-  color: var(--t90);
+  min-width: 0;
+}
+.bw-adj {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  color: var(--t35);
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.bw-adj:active { color: var(--t90); }
+.bw-val {
+  flex: 1;
   font-family: var(--mono);
   font-size: 16px;
   font-weight: 400;
-  padding: 12px 16px;
-  text-align: left;
-  transition: border-color 0.3s, background 0.3s;
-  -moz-appearance: textfield;
+  color: var(--t90);
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0;
+  min-width: 0;
 }
-.bw-input::-webkit-inner-spin-button,
-.bw-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.bw-input::placeholder { color: var(--t15); }
-.bw-input:focus { outline: none; border-color: rgba(212,165,116,0.4); background: var(--t08); }
-.bw-unit {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--t35);
-  letter-spacing: 1px;
-  flex-shrink: 0;
-}
+.bw-val.empty { color: var(--t15); }
 
 /* ── Benchmarks ── */
 .bench-section { margin-bottom: 24px; }
@@ -919,6 +988,169 @@ body {
   line-height: 1.7;
 }
 
+/* ── Edit Programs ── */
+.ep-back {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--t35);
+  background: none;
+  border: none;
+  padding: 12px 0;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+.ep-back:active { color: var(--t60); }
+.ep-field {
+  display: block;
+  width: 100%;
+  background: var(--t04);
+  border: 1px solid var(--t08);
+  border-radius: 8px;
+  color: var(--t90);
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+.ep-field:focus { outline: none; border-color: rgba(212,165,116,0.4); }
+.ep-field.lg {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 400;
+}
+.ep-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--t08);
+  border-radius: 10px;
+  padding: 14px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ep-item:active { background: var(--t04); }
+.ep-item-info { flex: 1; min-width: 0; }
+.ep-item-title {
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--t90);
+}
+.ep-item-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--t35);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.ep-ord {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--t08);
+  background: var(--t04);
+  color: var(--t60);
+  font-size: 14px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+.ep-ord:active { background: var(--t08); }
+.ep-ord.del { color: var(--danger); }
+.ep-add {
+  width: 100%;
+  padding: 14px;
+  border: 1px dashed var(--t08);
+  border-radius: 10px;
+  background: none;
+  color: var(--t35);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.ep-add:active { border-color: var(--t15); color: var(--t60); }
+.ep-reset {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(196,92,92,0.15);
+  border-radius: 10px;
+  background: none;
+  color: var(--danger);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.ep-reset:active { background: rgba(196,92,92,0.05); }
+.ep-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--t35);
+  margin: 16px 0 8px;
+}
+.ep-set-row {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+}
+.ep-set-row + .ep-set-row { border-top: 1px solid var(--t04); }
+.ep-set-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t35);
+  width: 20px;
+  text-align: center;
+}
+.ep-set-input {
+  background: var(--t04);
+  border: 1px solid var(--t08);
+  border-radius: 6px;
+  color: var(--t90);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 10px 8px;
+  text-align: center;
+  width: 100%;
+}
+.ep-set-input:focus { outline: none; border-color: rgba(212,165,116,0.4); }
+.ep-ex-card {
+  border: 1px solid var(--t08);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.ep-ex-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ep-ex-name {
+  flex: 1;
+  background: var(--t04);
+  border: 1px solid var(--t08);
+  border-radius: 6px;
+  color: var(--t90);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 10px 10px;
+}
+.ep-ex-name:focus { outline: none; border-color: rgba(212,165,116,0.4); }
+
 /* ── Animations ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
@@ -994,7 +1226,7 @@ body {
 }
 .cal-day:empty { cursor: default; }
 .cal-day:not(:empty):active { background: var(--t04); }
-.cal-day.today { color: var(--t90); font-weight: 400; }
+.cal-day.today { color: var(--t90); font-weight: 400; border-color: rgba(212,165,116,0.4); }
 .cal-day.selected { background: var(--t08); border-color: var(--t15); }
 .cal-day.move-target { border-color: var(--cool); border-style: dashed; }
 .cal-day.has-workout::after,
@@ -1158,6 +1390,109 @@ body {
   appearance: none;
   cursor: pointer;
 }
+
+/* ── Modal ── */
+#modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.7);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+#modalCard {
+  background: #141416;
+  border: 1px solid var(--t08);
+  border-radius: 14px;
+  padding: 24px;
+  width: 100%;
+  max-width: 320px;
+}
+#modalMsg {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--t90);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+#modalInput {
+  display: block;
+  width: 100%;
+  background: var(--t04);
+  border: 1px solid var(--t08);
+  border-radius: 8px;
+  color: var(--t90);
+  font-family: var(--mono);
+  font-size: 16px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  transition: border-color 0.3s;
+  -moz-appearance: textfield;
+}
+#modalInput::-webkit-inner-spin-button,
+#modalInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+#modalInput:focus { outline: none; border-color: rgba(212,165,116,0.4); }
+#modalBtns {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.modal-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--t08);
+  background: var(--t04);
+  color: var(--t60);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.modal-btn:active { background: var(--t08); border-color: var(--t15); }
+.modal-ok {
+  color: var(--warm);
+  border-color: rgba(212,165,116,0.15);
+  background: var(--w08);
+}
+.modal-ok:active { background: var(--w15); }
+
+/* ── Unit toggle ── */
+.bw-unit-toggle {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--warm);
+  letter-spacing: 1px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.bw-unit-toggle:active { color: var(--t60); }
+
+/* ── Rest label ── */
+.rest-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--t15);
+  margin-top: 2px;
+  cursor: pointer;
+  letter-spacing: 0;
+}
+.rest-label:active { color: var(--t35); }
 </style>
 </head>
 <body>
@@ -1193,8 +1528,12 @@ body {
     </div>
     <div class="bw-row">
       <span class="bw-label">bodyweight</span>
-      <input type="number" inputmode="decimal" step="0.1" class="bw-input" id="bwInput" placeholder="0.0">
-      <span class="bw-unit">kg</span>
+      <div class="bw-stepper">
+        <button class="bw-adj" id="bwDec">&minus;</button>
+        <div class="bw-val" id="bwVal">—</div>
+        <button class="bw-adj" id="bwInc">+</button>
+      </div>
+      <button class="bw-unit-toggle" id="unitToggle">kg</button>
     </div>
   </div>
   <div id="benchSection" class="bench-section">
@@ -1202,7 +1541,6 @@ body {
     <div class="bench-card" id="benchCard"></div>
   </div>
   <div id="prBox"></div>
-  <div id="e1rmBox"></div>
   <div>
     <div class="stat-label">weight over time</div>
     <div class="stat-card">
@@ -1236,6 +1574,10 @@ body {
   <div class="cal-detail" id="calDetail"></div>
 </div>
 
+<div id="editProg" class="screen">
+  <div id="epContent"></div>
+</div>
+
 <div class="timer-bar" id="timer">
   <div class="t-time" id="tTime">3:00</div>
   <div class="t-bar-progress"><div class="t-bar-fill" id="tFill"></div></div>
@@ -1260,8 +1602,18 @@ body {
   <div style="font-size:14px;opacity:0.7;">Tap anywhere to refresh</div>
 </div>
 
+<div id="summary" style="display:none"></div>
+
+<div id="modal" style="display:none">
+  <div id="modalCard">
+    <div id="modalMsg"></div>
+    <input id="modalInput" type="number" inputmode="decimal" style="display:none">
+    <div id="modalBtns"></div>
+  </div>
+</div>
+
 <script>
-const PROGRAMS = [
+const DEFAULT_PROGRAMS = [
   {
     id: 'kra', name: 'Kinobody Ripped Artist',
     workouts: [
@@ -1381,7 +1733,8 @@ const PROGRAMS = [
     ]
   }
 ];
-const WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
+let PROGRAMS = JSON.parse(localStorage.getItem('wp')) || JSON.parse(JSON.stringify(DEFAULT_PROGRAMS));
+let WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
 
 const ALTS = {
   'Smith Machine Incline Bench': ['Incline Barbell Bench Press', 'Flat Barbell Bench Press', 'Incline DB Press', 'Flat DB Press', 'Cable Flyes', 'Machine Chest Press', 'Dips'],
@@ -1448,7 +1801,72 @@ const db = {
   saveSess: s => s ? localStorage.setItem('ws', JSON.stringify(s)) : localStorage.removeItem('ws'),
   sched: () => { try { return JSON.parse(localStorage.getItem('wc')) || []; } catch { return []; } },
   saveSched: s => localStorage.setItem('wc', JSON.stringify(s)),
+  progs: () => { try { return JSON.parse(localStorage.getItem('wp')); } catch { return null; } },
+  saveProgs: p => { localStorage.setItem('wp', JSON.stringify(p)); },
 };
+
+// Modal
+const modal = {
+  _show(msg, type, def) {
+    return new Promise(resolve => {
+      $('modalMsg').textContent = msg;
+      const inp = $('modalInput');
+      if (type === 'prompt') {
+        inp.style.display = '';
+        inp.value = def ?? '';
+      } else {
+        inp.style.display = 'none';
+      }
+      const btns = $('modalBtns');
+      if (type === 'alert') {
+        btns.innerHTML = '<button class="modal-btn modal-ok">ok</button>';
+      } else {
+        btns.innerHTML = '<button class="modal-btn modal-cancel">cancel</button><button class="modal-btn modal-ok">ok</button>';
+      }
+      btns.querySelector('.modal-ok').addEventListener('click', () => {
+        $('modal').style.display = 'none';
+        resolve(type === 'prompt' ? inp.value : true);
+      });
+      const cancel = btns.querySelector('.modal-cancel');
+      if (cancel) cancel.addEventListener('click', () => {
+        $('modal').style.display = 'none';
+        resolve(type === 'prompt' ? null : false);
+      });
+      $('modal').style.display = 'flex';
+      if (type === 'prompt') setTimeout(() => inp.focus(), 50);
+    });
+  },
+  confirm(msg) { return modal._show(msg, 'confirm'); },
+  prompt(msg, def) { return modal._show(msg, 'prompt', def); },
+  alert(msg) { return modal._show(msg, 'alert'); },
+};
+
+// Unit conversion
+const KG_TO_LB = 2.20462;
+function getUnit() { return localStorage.getItem('unit') || 'kg'; }
+function setUnit(u) { localStorage.setItem('unit', u); }
+function toDisplay(kg) {
+  const v = parseFloat(kg);
+  if (isNaN(v)) return kg;
+  if (getUnit() === 'lb') return +(v * KG_TO_LB).toFixed(1);
+  return v;
+}
+function fromDisplay(val) {
+  const v = parseFloat(val);
+  if (isNaN(v)) return val;
+  if (getUnit() === 'lb') return +(v / KG_TO_LB).toFixed(1);
+  return v;
+}
+function unitLabel() { return getUnit(); }
+function fmtRest(sec) {
+  if (sec >= 60) { const m = Math.floor(sec / 60), s = sec % 60; return s ? m + 'm' + s + 's' : m + 'm'; }
+  return sec + 's';
+}
+
+function refreshPrograms() {
+  db.saveProgs(PROGRAMS);
+  WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
+}
 
 function lastSets(wid, name) {
   const h = db.hist();
@@ -1462,7 +1880,7 @@ function lastSets(wid, name) {
 
 // Nav
 function show(id) {
-  [$('home'), $('workout'), $('stats'), $('calendar')].forEach(s => s.classList.remove('on'));
+  [$('home'), $('workout'), $('stats'), $('calendar'), $('editProg')].forEach(s => s.classList.remove('on'));
   if (id === 'home') $(session ? 'workout' : 'home').classList.add('on');
   else {
     $(id).classList.add('on');
@@ -1479,23 +1897,52 @@ document.querySelectorAll('.tab').forEach(b =>
 );
 
 // Home
+function lastTrainedStr(wid) {
+  const h = db.hist();
+  for (let i = h.length - 1; i >= 0; i--) {
+    if (h[i].wid === wid) {
+      const d = Math.floor((Date.now() - new Date(h[i].date + 'T12:00:00').getTime()) / 86400000);
+      if (d === 0) return 'today';
+      if (d === 1) return 'yesterday';
+      return d + ' days ago';
+    }
+  }
+  return null;
+}
 function renderCards() {
-  $('cards').innerHTML = PROGRAMS.map(p => `
+  $('cards').innerHTML = PROGRAMS.map((p, pi) => `
     <div class="program-section">
-      <div class="program-name">${p.name}</div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <div class="program-name">${p.name}</div>
+        <button class="ep-back" data-pi="${pi}" style="margin:0;padding:4px 0;font-size:12px;letter-spacing:2px">edit</button>
+      </div>
       <div class="program-sub">${p.workouts.length} day split</div>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
-        ${p.workouts.map(w => `
+        ${p.workouts.map(w => {
+          const lt = lastTrainedStr(w.id);
+          return `
           <div class="card" data-id="${w.id}">
-            <div class="card-day">${w.day}</div>
+            <div class="card-day">${w.day}${lt ? `<span style="float:right;color:var(--t15);letter-spacing:1px;font-size:10px;text-transform:none">${lt}</span>` : ''}</div>
             <div class="card-name">${w.title}</div>
             <div class="card-sub">${w.sub} · ${w.exercises.length} exercises</div>
-          </div>`).join('')}
+          </div>`;
+        }).join('')}
       </div>
-    </div>`).join('');
+    </div>`).join('') +
+    `<button class="ep-add" id="addProgBtn" style="margin-top:20px">+ add program</button>`;
   $('cards').querySelectorAll('.card').forEach(c =>
     c.addEventListener('click', () => startW(c.dataset.id))
   );
+  $('cards').querySelectorAll('[data-pi]').forEach(btn =>
+    btn.addEventListener('click', e => { e.stopPropagation(); openEditProg(+btn.dataset.pi); })
+  );
+  $('addProgBtn').addEventListener('click', () => {
+    const id = 'prog-' + Date.now();
+    PROGRAMS.push({ id, name: 'New Program', workouts: [] });
+    refreshPrograms();
+    renderCards();
+    openEditProg(PROGRAMS.length - 1);
+  });
 }
 
 function startW(id) {
@@ -1524,10 +1971,10 @@ function addSet(ei) {
   db.saveSess(session);
   renderW();
 }
-function rmSet(ei) {
+async function rmSet(ei) {
   const sets = session.exercises[ei].sets;
   if (sets.length <= 1) return;
-  if (sets[sets.length - 1].done && !confirm('Remove completed set?')) return;
+  if (sets[sets.length - 1].done && !await modal.confirm('Remove completed set?')) return;
   sets.pop();
   db.saveSess(session);
   renderW();
@@ -1577,20 +2024,14 @@ function renderW() {
           ${ex.sets.map((s, si) => { const goal = !s.done ? goalFor(ex.name, si, prev, s.target) : null; return `
             <div class="set-row ${s.done ? 'done' : ''}" data-e="${ei}" data-s="${si}">
               <div class="sn">${si + 1}</div>
-              <div class="st">${s.target}${goal ? `<div class="aim">${goal.kg}\u00d7${goal.reps}</div>` : ''}</div>
+              <div class="st">${s.target}${goal ? `<div class="aim">${toDisplay(goal.kg)}\u00d7${goal.reps}</div>` : ''}${s.rest ? `<div class="rest-label" data-e="${ei}" data-s="${si}">${fmtRest(s.rest)}</div>` : ''}</div>
               <div class="kg-wrap">
                 <button class="kg-adj dec" data-e="${ei}" data-s="${si}">\u2212</button>
-                <input type="number" inputmode="decimal" step="any" placeholder="kg" value="${s.kg}" data-f="kg" ${s.done ? 'readonly tabindex="-1"' : ''}>
+                <input type="number" inputmode="decimal" step="any" placeholder="${unitLabel()}" value="${s.done ? toDisplay(s.kg) : (s.kg !== '' ? toDisplay(s.kg) : '')}" data-f="kg" ${s.done ? 'readonly tabindex="-1"' : ''}>
                 <button class="kg-adj inc" data-e="${ei}" data-s="${si}">+</button>
               </div>
               <input type="number" inputmode="numeric" placeholder="reps" value="${s.reps}" data-f="reps" ${s.done ? 'readonly tabindex="-1"' : ''}>
               <button class="ck ${s.done ? 'on' : ''}" data-e="${ei}" data-s="${si}">${s.done ? '\u2713' : ''}</button>
-              ${s.done ? `<div class="rpe-bar">
-                <span class="rpe-label">rpe</span>
-                ${[6,7,8,9,10].map(v =>
-                  `<button class="rpe-opt ${s.rpe == v ? 'on' : ''}" data-e="${ei}" data-s="${si}" data-v="${v}">${v}</button>`
-                ).join('')}
-              </div>` : ''}
             </div>`; }).join('')}
           <div class="set-controls">
             <button class="set-ctrl rm" data-e="${ei}">−</button>
@@ -1603,7 +2044,8 @@ function renderW() {
   $('exList').querySelectorAll('input[type="number"]').forEach(inp =>
     inp.addEventListener('change', () => {
       const r = inp.closest('.set-row');
-      session.exercises[+r.dataset.e].sets[+r.dataset.s][inp.dataset.f] = inp.value;
+      const val = inp.dataset.f === 'kg' ? fromDisplay(parseFloat(inp.value) || 0) : inp.value;
+      session.exercises[+r.dataset.e].sets[+r.dataset.s][inp.dataset.f] = val;
       db.saveSess(session);
     })
   );
@@ -1613,11 +2055,17 @@ function renderW() {
       const s = session.exercises[ei].sets[si];
       if (s.done) { s.done = false; db.saveSess(session); renderW(); return; }
       const r = btn.closest('.set-row');
-      s.kg = r.querySelector('[data-f="kg"]').value;
+      s.kg = fromDisplay(parseFloat(r.querySelector('[data-f="kg"]').value) || 0);
       s.reps = r.querySelector('[data-f="reps"]').value;
       s.done = true;
+      if (navigator.vibrate) navigator.vibrate(30);
       db.saveSess(session);
       renderW();
+      // scroll to next incomplete set
+      setTimeout(() => {
+        const next = $('exList').querySelector('.set-row:not(.done)');
+        if (next) next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
       startTmr(s.rest, session.exercises[ei].name, si);
     })
   );
@@ -1646,17 +2094,23 @@ function renderW() {
       const delta = btn.classList.contains('inc') ? 1 : -1;
       const newVal = Math.max(0, (parseFloat(inp.value) || 0) + delta);
       inp.value = newVal;
-      s.kg = String(newVal);
+      s.kg = String(fromDisplay(newVal));
       db.saveSess(session);
     })
   );
-  $('exList').querySelectorAll('.rpe-opt').forEach(btn =>
-    btn.addEventListener('click', () => {
-      const ei = +btn.dataset.e, si = +btn.dataset.s;
-      session.exercises[ei].sets[si].rpe = +btn.dataset.v;
-      db.saveSess(session);
-      btn.closest('.rpe-bar').querySelectorAll('.rpe-opt').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
+  $('exList').querySelectorAll('.rest-label').forEach(el =>
+    el.addEventListener('click', async () => {
+      const ei = +el.dataset.e, si = +el.dataset.s;
+      const s = session.exercises[ei].sets[si];
+      const cur = s.rest || 0;
+      const val = await modal.prompt('Rest time in seconds:', cur);
+      if (val === null) return;
+      const sec = parseInt(val);
+      if (sec >= 0) {
+        s.rest = sec;
+        db.saveSess(session);
+        renderW();
+      }
     })
   );
   clearInterval(window._durId);
@@ -1667,6 +2121,7 @@ function renderW() {
   };
   updDur();
   window._durId = setInterval(updDur, 30000);
+  $('finishBtn').textContent = session.editIdx != null ? 'save changes' : 'finish workout';
   show('workout');
 }
 
@@ -1723,14 +2178,15 @@ $('tSkip').addEventListener('click', () => {
 });
 
 // Back / Finish
-$('back').addEventListener('click', () => {
-  if (session && confirm('Leave workout? Progress is saved.')) {
+$('back').addEventListener('click', async () => {
+  if (session && await modal.confirm('Leave workout? Progress is saved.')) {
     $('workout').classList.remove('on'); $('home').classList.add('on');
   }
 });
 $('finishBtn').addEventListener('click', () => {
   if (!session) return;
   clearInterval(window._durId);
+  const isEdit = session.editIdx != null;
   const h = db.hist();
   const entry = {
     date: session.date, wid: session.wid,
@@ -1738,10 +2194,24 @@ $('finishBtn').addEventListener('click', () => {
     bw: getBw() || null,
     exercises: session.exercises.map(ex => ({
       name: ex.name,
-      sets: ex.sets.map(s => ({ kg: parseFloat(s.kg) || 0, reps: parseInt(s.reps) || 0, rpe: s.rpe || null }))
+      sets: ex.sets.map(s => ({ kg: parseFloat(s.kg) || 0, reps: parseInt(s.reps) || 0 }))
     }))
   };
-  if (session.editIdx != null) {
+
+  // check PRs before saving
+  const prs = [];
+  if (!isEdit) {
+    entry.exercises.forEach(ex => {
+      const topNow = ex.sets.reduce((b, s) => s.kg > b ? s.kg : b, 0);
+      if (topNow > 0) {
+        let prevBest = 0;
+        h.forEach(w => { const e = w.exercises.find(x => x.name === ex.name); if (e) e.sets.forEach(s => { if (s.kg > prevBest) prevBest = s.kg; }); });
+        if (topNow > prevBest) prs.push(ex.name);
+      }
+    });
+  }
+
+  if (isEdit) {
     entry.duration = h[session.editIdx].duration;
     entry.bw = h[session.editIdx].bw != null ? h[session.editIdx].bw : entry.bw;
     h[session.editIdx] = entry;
@@ -1749,19 +2219,78 @@ $('finishBtn').addEventListener('click', () => {
     h.push(entry);
   }
   db.saveHist(h);
+
+  // summary for new workouts
+  if (!isEdit) {
+    const totalSets = entry.exercises.reduce((sum, ex) => sum + ex.sets.length, 0);
+    const durSec = entry.duration || 0;
+    const durStr = durSec >= 3600 ? Math.floor(durSec / 3600) + 'h ' + Math.floor((durSec % 3600) / 60) + 'm' : Math.floor(durSec / 60) + 'm';
+    let html = `<div class="sum-icon">✦</div>`;
+    html += `<div class="sum-title">Workout Complete</div>`;
+    html += `<div class="sum-stats">`;
+    if (durSec > 0) html += `<div class="sum-stat"><div class="sum-stat-val">${durStr}</div><div class="sum-stat-label">duration</div></div>`;
+    html += `<div class="sum-stat"><div class="sum-stat-val">${entry.exercises.length}</div><div class="sum-stat-label">exercises</div></div>`;
+    html += `<div class="sum-stat"><div class="sum-stat-val">${totalSets}</div><div class="sum-stat-label">sets</div></div>`;
+    html += `</div>`;
+    if (prs.length) html += `<div class="sum-pr">New PR: ${prs.join(', ')}</div>`;
+    html += `<button class="sum-dismiss" id="sumDone">done</button>`;
+    $('summary').innerHTML = html;
+    $('summary').style.display = 'flex';
+    $('sumDone').addEventListener('click', () => {
+      $('summary').style.display = 'none';
+      $('workout').classList.remove('on'); $('home').classList.add('on');
+      renderCards();
+    });
+  } else {
+    $('workout').classList.remove('on'); $('home').classList.add('on');
+  }
   session = null; db.saveSess(null);
-  $('workout').classList.remove('on'); $('home').classList.add('on');
 });
 
 // Bodyweight
 const bwKey = 'bw';
 function getBw() { return parseFloat(localStorage.getItem(bwKey)) || 0; }
 function saveBw(v) { localStorage.setItem(bwKey, v); }
-$('bwInput').value = getBw() || '';
-$('bwInput').addEventListener('input', () => {
-  const v = parseFloat($('bwInput').value) || 0;
+function renderBwVal() {
+  const bw = getBw();
+  const el = $('bwVal');
+  if (bw) { el.textContent = toDisplay(bw) + ' ' + unitLabel(); el.classList.remove('empty'); }
+  else { el.textContent = 'tap to set'; el.classList.add('empty'); }
+}
+renderBwVal();
+$('bwVal').addEventListener('click', async () => {
+  const bw = getBw();
+  const val = await modal.prompt('Bodyweight (' + unitLabel() + '):', bw ? toDisplay(bw) : '');
+  if (val === null) return;
+  const v = fromDisplay(parseFloat(val) || 0);
   saveBw(v);
+  renderBwVal();
   renderBench();
+});
+$('bwDec').addEventListener('click', () => {
+  const step = getUnit() === 'lb' ? 1 : 0.5;
+  const bw = getBw();
+  const display = bw ? toDisplay(bw) : 0;
+  saveBw(fromDisplay(Math.max(0, display - step)));
+  renderBwVal();
+  renderBench();
+});
+$('bwInc').addEventListener('click', () => {
+  const step = getUnit() === 'lb' ? 1 : 0.5;
+  const bw = getBw();
+  const display = bw ? toDisplay(bw) : 0;
+  saveBw(fromDisplay(display + step));
+  renderBwVal();
+  renderBench();
+});
+$('unitToggle').textContent = unitLabel();
+$('unitToggle').addEventListener('click', () => {
+  const cur = getUnit();
+  const next = cur === 'kg' ? 'lb' : 'kg';
+  setUnit(next);
+  $('unitToggle').textContent = next;
+  renderBwVal();
+  renderStats();
 });
 
 // Benchmarks
@@ -1813,7 +2342,7 @@ function renderBench() {
         const reached = topKg >= cmp;
         const pct = topKg > 0 ? Math.min(100, Math.round(topKg / cmp * 100)) : 0;
         const barW = Math.min(36, Math.round(pct * 0.36));
-        const display = lv.type === '+' ? `bw+${added}` : `${total} kg`;
+        const display = lv.type === '+' ? `bw+${toDisplay(added)}` : `${toDisplay(total)} ${unitLabel()}`;
         return `<div class="bench-val ${reached ? 'reached' : ''} ${pct >= 80 && !reached ? 'current' : ''}">
           ${display}
           ${topKg > 0 ? `<span class="bar" style="width:${barW}px"></span>` : ''}
@@ -1849,27 +2378,24 @@ function statFor(name) {
   });
   if (entries.length) {
     const pr = entries.reduce((b, e) => e.kg > b.kg ? e : b, entries[0]);
-    $('prBox').innerHTML = `<div class="pr">
-      <div class="pr-icon">✦</div>
-      <div><div class="pr-val">${pr.kg} kg × ${pr.reps}</div><div class="pr-date">${fmtDate(pr.date)}</div></div>
-    </div>`;
-  } else $('prBox').innerHTML = '';
-
-  if (entries.length) {
     const best1rm = entries.reduce((best, entry) =>
       entry.sets.reduce((b, s) => {
         if (!s.kg || !s.reps) return b;
         return Math.max(b, s.kg * (1 + s.reps / 30));
       }, best), 0);
-    $('e1rmBox').innerHTML = best1rm > 0 ? `<div class="e1rm-card">
-      <div><div class="e1rm-val">${Math.round(best1rm * 10) / 10} kg</div><div class="e1rm-sub">estimated 1RM · epley</div></div>
-    </div>` : '';
-  } else $('e1rmBox').innerHTML = '';
+    $('prBox').innerHTML = `<div class="pr">
+      <div class="pr-icon">✦</div>
+      <div><div class="pr-val">${toDisplay(pr.kg)} ${unitLabel()} × ${pr.reps}</div><div class="pr-date">${fmtDate(pr.date)}</div></div>
+      ${best1rm > 0 ? `<div class="pr-e1rm"><div class="pr-e1rm-val">${toDisplay(Math.round(best1rm * 10) / 10)} ${unitLabel()}</div><div class="pr-e1rm-sub">est. 1RM</div></div>` : ''}
+    </div>`;
+  } else {
+    $('prBox').innerHTML = `<div class="empty">No sessions recorded yet for this exercise.<br>Complete a workout to see your stats here.</div>`;
+  }
 
-  drawLine('chart', entries.map(e => ({date: e.date, value: e.kg})), 'rgba(212,165,116,');
+  drawLine('chart', entries.map(e => ({date: e.date, value: toDisplay(e.kg)})), 'rgba(212,165,116,');
   const volData = entries.map(e => ({
     date: e.date,
-    value: e.sets.reduce((sum, s) => sum + (s.kg || 0) * (s.reps || 0), 0)
+    value: e.sets.reduce((sum, s) => sum + (toDisplay(s.kg || 0)) * (s.reps || 0), 0)
   }));
   $('volWrap').style.display = volData.some(d => d.value > 0) ? '' : 'none';
   drawLine('volChart', volData, 'rgba(123,157,184,');
@@ -1883,7 +2409,7 @@ function statFor(name) {
   $('histWrap').style.display = '';
   const rows = entries.slice().reverse().slice(0, 20);
   $('hist').innerHTML = `<table class="h-table"><tbody>${
-    rows.map(r => `<tr><td>${fmtDate(r.date)}</td><td>${r.sets.map(s => (s.kg ? s.kg + 'kg\u00d7' : '') + s.reps + (s.rpe ? ' @' + s.rpe : '')).join('  ')}</td></tr>`).join('')
+    rows.map(r => `<tr><td>${fmtDate(r.date)}</td><td>${r.sets.map(s => (s.kg ? toDisplay(s.kg) + unitLabel() + '\u00d7' : '') + s.reps).join('  ')}</td></tr>`).join('')
   }</tbody></table>`;
 }
 
@@ -1898,7 +2424,7 @@ function drawLine(canId, data, clr) {
     c.fillStyle = 'rgba(232,228,223,0.25)';
     c.font = '300 12px Outfit, sans-serif';
     c.textAlign = 'center';
-    c.fillText(data.length ? 'Need 2+ sessions' : 'No data yet', w / 2, h / 2);
+    c.fillText(data.length ? 'One more session to chart' : 'No data yet', w / 2, h / 2);
     return;
   }
   const p = { t: 12, r: 8, b: 28, l: 40 };
@@ -2033,10 +2559,10 @@ function renderCalDetail() {
     const title = w ? w.title : h.wid;
     const durMin = h.duration ? Math.floor(h.duration / 60) : null;
     const durStr = durMin != null ? (durMin >= 60 ? Math.floor(durMin/60) + 'h ' + (durMin%60) + 'm' : durMin + ' min') : 'no time';
-    const bwStr = h.bw ? `<span class="cal-bw">${h.bw}kg</span>` : '';
+    const bwStr = h.bw ? `<span class="cal-bw">${toDisplay(h.bw)}${unitLabel()}</span>` : '';
     const rows = h.exercises.map(e =>
       e.sets.map((s, si) =>
-        `<tr><td>${si === 0 ? e.name : ''}</td><td>${si + 1}</td><td>${s.kg ? s.kg + 'kg' : '–'}</td><td>${s.reps}</td></tr>`
+        `<tr><td>${si === 0 ? e.name : ''}</td><td>${si + 1}</td><td>${s.kg ? toDisplay(s.kg) + unitLabel() : '–'}</td><td>${s.reps}</td></tr>`
       ).join('')
     ).join('');
     html += `<div class="cal-detail-card">
@@ -2103,13 +2629,13 @@ function schedFromSelect() {
   if (sel && calSelected) schedWorkout(calSelected, sel.value);
 }
 
-function editDuration(date, hi) {
+async function editDuration(date, hi) {
   const hist = db.hist();
   const entries = hist.filter(h => h.date === date);
   const entry = entries[hi];
   if (!entry) return;
   const cur = entry.duration ? Math.floor(entry.duration / 60) : '';
-  const val = prompt('Duration in minutes:', cur);
+  const val = await modal.prompt('Duration in minutes:', cur);
   if (val === null) return;
   const mins = parseInt(val);
   const idx = hist.indexOf(entry);
@@ -2118,8 +2644,8 @@ function editDuration(date, hi) {
   renderCalDetail();
 }
 
-function editWorkout(date) {
-  if (session && !confirm('You have an active session. Discard it to edit this workout?')) return;
+async function editWorkout(date) {
+  if (session && !await modal.confirm('You have an active session. Discard it to edit this workout?')) return;
   const hist = db.hist();
   const idx = hist.findIndex(h => h.date === date);
   if (idx === -1) return;
@@ -2135,7 +2661,7 @@ function editWorkout(date) {
         sets: ex.sets.map((s, si) => ({
           target: tmpl && tmpl.sets[si] ? tmpl.sets[si].target : '',
           rest: tmpl && tmpl.sets[si] ? tmpl.sets[si].rest : 0,
-          kg: s.kg || '', reps: s.reps || '', rpe: s.rpe || null, done: true
+          kg: s.kg || '', reps: s.reps || '', done: true
         }))
       };
     })
@@ -2186,6 +2712,220 @@ $('calNext').addEventListener('click', () => {
   calSelected = null;
   renderCal();
 });
+
+// Edit Programs
+let editProgIdx = null, editWorkoutIdx = null;
+
+function openEditProg(pi) {
+  editProgIdx = pi;
+  editWorkoutIdx = null;
+  renderEditProg();
+  show('editProg');
+}
+
+function renderEditProg() {
+  if (editProgIdx == null || !PROGRAMS[editProgIdx]) return;
+  const p = PROGRAMS[editProgIdx];
+
+  if (editWorkoutIdx != null && p.workouts[editWorkoutIdx]) {
+    renderEditWorkout(p, editWorkoutIdx);
+    return;
+  }
+
+  let html = `<button class="ep-back" id="epBack">\u2190 back</button>`;
+  html += `<div class="ep-label">program name</div>`;
+  html += `<input class="ep-field lg" id="epName" value="${p.name}">`;
+  html += `<div class="ep-label">workouts</div>`;
+
+  p.workouts.forEach((w, wi) => {
+    html += `<div class="ep-item">
+      <div class="ep-item-info" data-wi="${wi}">
+        <div class="ep-item-title">${w.day} — ${w.title}</div>
+        <div class="ep-item-sub">${w.exercises.length} exercises</div>
+      </div>
+      ${wi > 0 ? `<button class="ep-ord" data-action="up" data-wi="${wi}">\u2191</button>` : ''}
+      ${wi < p.workouts.length - 1 ? `<button class="ep-ord" data-action="down" data-wi="${wi}">\u2193</button>` : ''}
+      <button class="ep-ord del" data-action="del-w" data-wi="${wi}">\u00d7</button>
+    </div>`;
+  });
+
+  html += `<button class="ep-add" id="epAddW">+ add workout</button>`;
+  html += `<button class="ep-reset" id="epReset">reset to defaults</button>`;
+  html += `<button class="ep-ord del" id="epDelProg" style="width:100%;border-radius:10px;height:auto;padding:14px;margin-top:8px;font-size:13px;letter-spacing:1px">delete program</button>`;
+
+  $('epContent').innerHTML = html;
+
+  $('epBack').addEventListener('click', () => {
+    refreshPrograms();
+    renderCards();
+    show('home');
+  });
+
+  $('epName').addEventListener('input', () => {
+    PROGRAMS[editProgIdx].name = $('epName').value;
+    refreshPrograms();
+  });
+
+  $('epContent').querySelectorAll('.ep-item-info').forEach(el =>
+    el.addEventListener('click', () => {
+      editWorkoutIdx = +el.dataset.wi;
+      renderEditProg();
+    })
+  );
+
+  $('epContent').querySelectorAll('.ep-ord[data-action]').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      const wi = +btn.dataset.wi;
+      const action = btn.dataset.action;
+      if (action === 'up' && wi > 0) {
+        [p.workouts[wi - 1], p.workouts[wi]] = [p.workouts[wi], p.workouts[wi - 1]];
+      } else if (action === 'down' && wi < p.workouts.length - 1) {
+        [p.workouts[wi], p.workouts[wi + 1]] = [p.workouts[wi + 1], p.workouts[wi]];
+      } else if (action === 'del-w') {
+        if (!await modal.confirm('Delete workout "' + p.workouts[wi].title + '"?')) return;
+        p.workouts.splice(wi, 1);
+      }
+      refreshPrograms();
+      renderEditProg();
+    });
+  });
+
+  $('epAddW').addEventListener('click', () => {
+    const id = p.id + '-w' + Date.now();
+    p.workouts.push({ id, day: 'Day ' + (p.workouts.length + 1), title: 'New Workout', sub: '', exercises: [] });
+    refreshPrograms();
+    editWorkoutIdx = p.workouts.length - 1;
+    renderEditProg();
+  });
+
+  $('epReset').addEventListener('click', async () => {
+    if (!await modal.confirm('Reset this program to defaults? Your customizations will be lost.')) return;
+    const def = DEFAULT_PROGRAMS.find(d => d.id === p.id);
+    if (def) {
+      PROGRAMS[editProgIdx] = JSON.parse(JSON.stringify(def));
+    } else {
+      await modal.alert('No default found for this program.');
+      return;
+    }
+    refreshPrograms();
+    renderEditProg();
+  });
+
+  $('epDelProg').addEventListener('click', async () => {
+    if (!await modal.confirm('Delete program "' + p.name + '"?')) return;
+    PROGRAMS.splice(editProgIdx, 1);
+    refreshPrograms();
+    renderCards();
+    show('home');
+  });
+}
+
+function renderEditWorkout(p, wi) {
+  const w = p.workouts[wi];
+  let html = `<button class="ep-back" id="epBackW">\u2190 back to ${p.name}</button>`;
+  html += `<div class="ep-label">day label</div>`;
+  html += `<input class="ep-field" id="ewDay" value="${w.day}">`;
+  html += `<div class="ep-label">title</div>`;
+  html += `<input class="ep-field lg" id="ewTitle" value="${w.title}">`;
+  html += `<div class="ep-label">subtitle</div>`;
+  html += `<input class="ep-field" id="ewSub" value="${w.sub || ''}">`;
+  html += `<div class="ep-label">exercises</div>`;
+
+  w.exercises.forEach((ex, ei) => {
+    html += `<div class="ep-ex-card">
+      <div class="ep-ex-header">
+        <input class="ep-ex-name" data-ei="${ei}" value="${ex.name}">
+        ${ei > 0 ? `<button class="ep-ord" data-action="ex-up" data-ei="${ei}">\u2191</button>` : ''}
+        ${ei < w.exercises.length - 1 ? `<button class="ep-ord" data-action="ex-down" data-ei="${ei}">\u2193</button>` : ''}
+        <button class="ep-ord del" data-action="ex-del" data-ei="${ei}">\u00d7</button>
+      </div>`;
+
+    html += `<div class="ep-set-row" style="padding-top:4px;padding-bottom:4px">
+      <div class="ep-set-num"></div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t15);text-align:center">reps</div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t15);text-align:center">rest</div>
+      <div style="width:28px"></div>
+    </div>`;
+    ex.sets.forEach((s, si) => {
+      html += `<div class="ep-set-row">
+        <div class="ep-set-num">${si + 1}</div>
+        <input class="ep-set-input" data-ei="${ei}" data-si="${si}" data-f="target" value="${s.target}" placeholder="e.g. 6–8">
+        <input class="ep-set-input" type="number" inputmode="numeric" data-ei="${ei}" data-si="${si}" data-f="rest" value="${s.rest}" placeholder="seconds">
+        ${ex.sets.length > 1 ? `<button class="ep-ord del" data-action="set-del" data-ei="${ei}" data-si="${si}" style="width:28px;height:28px;font-size:12px">\u00d7</button>` : '<div style="width:28px"></div>'}
+      </div>`;
+    });
+
+    html += `<button class="ep-add" data-action="set-add" data-ei="${ei}" style="margin:8px 0 0;padding:8px;font-size:12px">+ add set</button>`;
+    html += `</div>`;
+  });
+
+  html += `<button class="ep-add" id="ewAddEx">+ add exercise</button>`;
+  $('epContent').innerHTML = html;
+
+  $('epBackW').addEventListener('click', () => {
+    editWorkoutIdx = null;
+    refreshPrograms();
+    renderEditProg();
+  });
+
+  $('ewDay').addEventListener('input', () => { w.day = $('ewDay').value; refreshPrograms(); });
+  $('ewTitle').addEventListener('input', () => { w.title = $('ewTitle').value; refreshPrograms(); });
+  $('ewSub').addEventListener('input', () => { w.sub = $('ewSub').value; refreshPrograms(); });
+
+  $('epContent').querySelectorAll('.ep-ex-name').forEach(inp =>
+    inp.addEventListener('input', () => {
+      w.exercises[+inp.dataset.ei].name = inp.value;
+      refreshPrograms();
+    })
+  );
+
+  $('epContent').querySelectorAll('.ep-set-input').forEach(inp =>
+    inp.addEventListener('input', () => {
+      const ei = +inp.dataset.ei, si = +inp.dataset.si, f = inp.dataset.f;
+      if (f === 'rest') w.exercises[ei].sets[si].rest = parseInt(inp.value) || 0;
+      else w.exercises[ei].sets[si].target = inp.value;
+      refreshPrograms();
+    })
+  );
+
+  $('epContent').querySelectorAll('.ep-ord[data-action]').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      const action = btn.dataset.action;
+      const ei = +btn.dataset.ei;
+      if (action === 'ex-up' && ei > 0) {
+        [w.exercises[ei - 1], w.exercises[ei]] = [w.exercises[ei], w.exercises[ei - 1]];
+      } else if (action === 'ex-down' && ei < w.exercises.length - 1) {
+        [w.exercises[ei], w.exercises[ei + 1]] = [w.exercises[ei + 1], w.exercises[ei]];
+      } else if (action === 'ex-del') {
+        if (!await modal.confirm('Delete exercise "' + w.exercises[ei].name + '"?')) return;
+        w.exercises.splice(ei, 1);
+      } else if (action === 'set-del') {
+        const si = +btn.dataset.si;
+        w.exercises[ei].sets.splice(si, 1);
+      }
+      refreshPrograms();
+      renderEditWorkout(p, wi);
+    });
+  });
+
+  $('epContent').querySelectorAll('[data-action="set-add"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ei = +btn.dataset.ei;
+      const last = w.exercises[ei].sets[w.exercises[ei].sets.length - 1];
+      w.exercises[ei].sets.push({ target: last ? last.target : '8-10', rest: last ? last.rest : 120 });
+      refreshPrograms();
+      renderEditWorkout(p, wi);
+    });
+  });
+
+  $('ewAddEx').addEventListener('click', () => {
+    w.exercises.push({ name: 'New Exercise', sets: [{ target: '8-10', rest: 120 }] });
+    refreshPrograms();
+    renderEditWorkout(p, wi);
+  });
+}
 
 // Init
 renderCards();
