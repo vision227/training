@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rpt-tracker-v3';
+const CACHE_NAME = 'rpt-tracker-v4';
 const ASSETS = [
   './',
   './index.html',

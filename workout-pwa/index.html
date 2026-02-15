@@ -986,6 +986,52 @@ body {
   letter-spacing: 1px;
   margin-bottom: 12px;
 }
+.cal-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.cal-detail-table th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--t35);
+  padding: 4px 6px 4px 0;
+  border-bottom: 1px solid var(--t08);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.cal-detail-table td {
+  padding: 5px 6px 5px 0;
+  color: var(--t60);
+  border-bottom: 1px solid var(--t04);
+}
+.cal-detail-table td:first-child {
+  color: var(--t90);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cal-detail-table tr:last-child td { border-bottom: none; }
+.cal-dur-edit {
+  background: none;
+  border: none;
+  color: var(--t35);
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+.cal-bw {
+  font-size: 11px;
+  color: var(--t35);
+  margin-left: 8px;
+}
 .cal-detail-exercises {
   font-family: var(--mono);
   font-size: 13px;
@@ -1628,6 +1674,7 @@ $('finishBtn').addEventListener('click', () => {
   const entry = {
     date: session.date, wid: session.wid,
     duration: session.startedAt ? Math.round((Date.now() - session.startedAt) / 1000) : null,
+    bw: getBw() || null,
     exercises: session.exercises.map(ex => ({
       name: ex.name,
       sets: ex.sets.map(s => ({ kg: parseFloat(s.kg) || 0, reps: parseInt(s.reps) || 0, rpe: s.rpe || null }))
@@ -1635,6 +1682,7 @@ $('finishBtn').addEventListener('click', () => {
   };
   if (session.editIdx != null) {
     entry.duration = h[session.editIdx].duration;
+    entry.bw = h[session.editIdx].bw != null ? h[session.editIdx].bw : entry.bw;
     h[session.editIdx] = entry;
   } else {
     h.push(entry);
@@ -1919,17 +1967,24 @@ function renderCalDetail() {
   const isFuture = calSelected >= todayStr;
   let html = '';
 
-  hist.forEach(h => {
+  hist.forEach((h, hi) => {
     const w = WORKOUTS.find(x => x.id === h.wid);
     const title = w ? w.title : h.wid;
-    const durStr = h.duration ? ' \u00b7 ' + (h.duration >= 3600 ? Math.floor(h.duration/3600) + 'h ' + Math.floor(h.duration%3600/60) + 'm' : Math.floor(h.duration/60) + ' min') : '';
-    const exSummary = h.exercises.map(e =>
-      `${e.name}: ${e.sets.map(s => (s.kg ? s.kg + 'kg\u00d7' : '') + s.reps).join(', ')}`
-    ).join('<br>');
+    const durMin = h.duration ? Math.floor(h.duration / 60) : null;
+    const durStr = durMin != null ? (durMin >= 60 ? Math.floor(durMin/60) + 'h ' + (durMin%60) + 'm' : durMin + ' min') : 'no time';
+    const bwStr = h.bw ? `<span class="cal-bw">${h.bw}kg</span>` : '';
+    const rows = h.exercises.map(e =>
+      e.sets.map((s, si) =>
+        `<tr><td>${si === 0 ? e.name : ''}</td><td>${si + 1}</td><td>${s.kg ? s.kg + 'kg' : '–'}</td><td>${s.reps}</td></tr>`
+      ).join('')
+    ).join('');
     html += `<div class="cal-detail-card">
       <div class="cal-detail-title">${title}</div>
-      <div class="cal-detail-sub">${fmtDate(h.date)}${durStr}</div>
-      <div class="cal-detail-exercises">${exSummary}</div>
+      <div class="cal-detail-sub">${fmtDate(h.date)} · <button class="cal-dur-edit" onclick="editDuration('${h.date}',${hi})">${durStr}</button>${bwStr}</div>
+      <table class="cal-detail-table">
+        <tr><th>exercise</th><th>set</th><th>weight</th><th>reps</th></tr>
+        ${rows}
+      </table>
       <div class="cal-actions">
         <button class="cal-btn" onclick="editWorkout('${h.date}')">edit</button>
         <button class="cal-btn" onclick="moveWorkout('${h.date}','hist')">move</button>
@@ -1985,6 +2040,21 @@ function unsched(date) {
 function schedFromSelect() {
   const sel = $('schedSel');
   if (sel && calSelected) schedWorkout(calSelected, sel.value);
+}
+
+function editDuration(date, hi) {
+  const hist = db.hist();
+  const entries = hist.filter(h => h.date === date);
+  const entry = entries[hi];
+  if (!entry) return;
+  const cur = entry.duration ? Math.floor(entry.duration / 60) : '';
+  const val = prompt('Duration in minutes:', cur);
+  if (val === null) return;
+  const mins = parseInt(val);
+  const idx = hist.indexOf(entry);
+  hist[idx].duration = mins > 0 ? mins * 60 : null;
+  db.saveHist(hist);
+  renderCalDetail();
 }
 
 function editWorkout(date) {
