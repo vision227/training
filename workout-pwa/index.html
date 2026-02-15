@@ -1268,7 +1268,7 @@ const PROGRAMS = [
       {
         id: 'monday', day: 'Monday', title: 'Upper Body A', sub: 'Chest & Arms',
         exercises: [
-          { name: 'Incline Barbell Bench Press', sets: [
+          { name: 'Smith Machine Incline Bench', sets: [
             { target: '4–6', rest: 180 }, { target: '6–8', rest: 180 }, { target: '8–10', rest: 120 }
           ]},
           { name: 'Standing Barbell Curls', sets: [
@@ -1327,7 +1327,7 @@ const PROGRAMS = [
           { name: 'Dumbbell Flyes', sets: [
             { target: '6–10', rest: 0 }
           ]},
-          { name: 'Incline Barbell Bench Press', sets: [
+          { name: 'Smith Machine Incline Bench', sets: [
             { target: '6–10', rest: 180 }
           ]},
           { name: 'Lat Pulldowns', sets: [
@@ -1384,7 +1384,7 @@ const PROGRAMS = [
 const WORKOUTS = PROGRAMS.flatMap(p => p.workouts);
 
 const ALTS = {
-  'Incline Barbell Bench Press': ['Flat Barbell Bench Press', 'Incline DB Press', 'Flat DB Press', 'Cable Flyes', 'Machine Chest Press', 'Dips'],
+  'Smith Machine Incline Bench': ['Incline Barbell Bench Press', 'Flat Barbell Bench Press', 'Incline DB Press', 'Flat DB Press', 'Cable Flyes', 'Machine Chest Press', 'Dips'],
   'Standing Barbell Curls': ['EZ-Bar Curls', 'Hammer Curls', 'Cable Curls', 'Machine Curls', 'Reverse Curls'],
   'Lateral Raises': ['Cable Lateral Raises', 'Machine Lateral Raises', 'DB Front Raises', 'Upright Rows'],
   'Bulgarian Split Squats': ['Barbell Squats', 'Leg Press', 'Lunges', 'Goblet Squats', 'Hack Squat', 'Leg Extensions', 'Smith Machine Squats'],
@@ -1409,7 +1409,7 @@ const ALTS = {
 };
 
 const STEP = {
-  'Incline Barbell Bench Press': 2.5, 'Flat Barbell Bench Press': 2.5, 'Close-Grip Bench Press': 2.5,
+  'Smith Machine Incline Bench': 2.5, 'Incline Barbell Bench Press': 2.5, 'Flat Barbell Bench Press': 2.5, 'Close-Grip Bench Press': 2.5,
   'Bulgarian Split Squats': 2.5, 'Barbell Squats': 2.5, 'Lunges': 2.5, 'Goblet Squats': 2,
   'Romanian Deadlifts': 2.5, 'Conventional Deadlifts': 2.5, 'Good Mornings': 2.5, 'Hip Thrusts': 2.5,
   'Seated Overhead DB Press': 2, 'Standing Barbell OHP': 2.5, 'Arnold Press': 2, 'Landmine Press': 2.5,
@@ -1766,7 +1766,7 @@ $('bwInput').addEventListener('input', () => {
 
 // Benchmarks
 const BENCH = [
-  { lift: 'Incline Bench', exercise: 'Incline Barbell Bench Press', levels: [
+  { lift: 'Incline Bench', exercise: 'Smith Machine Incline Bench', levels: [
     { label: 'Good', mult: 0.9, type: 'x' },
     { label: 'Warrior', mult: 1.2, type: 'x' },
     { label: 'Greek God', mult: 1.4, type: 'x' }
@@ -2247,7 +2247,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
   });
 
   const shareIcon = '<svg style="display:inline-block;vertical-align:middle;margin:0 2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
-  const iosSteps = 'Tap ' + shareIcon + ' Share in the toolbar, scroll down past the apps, and tap <strong>"Add to Home Screen"</strong>';
+  const addIcon = '<svg style="display:inline-block;vertical-align:middle;margin:0 2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+  const iosSteps = 'Tap ' + shareIcon + ' Share in the toolbar, then tap <strong>"Add to Home Screen"</strong> ' + addIcon;
   const androidSteps = 'Tap the <strong>install</strong> button below to add Train to your home screen';
   const defaultSteps = 'Open your browser menu and look for <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>';
 
