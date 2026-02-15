@@ -2246,7 +2246,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) chec
     deferredPrompt = e;
   });
 
-  const iosSteps = 'Tap <span class="step-icon">&#xFEFF;&#x1F4E4;</span> (Share) in the toolbar, then scroll down and tap <strong>"Add to Home Screen"</strong>';
+  const shareIcon = '<svg style="display:inline-block;vertical-align:middle;margin:0 2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  const iosSteps = 'Tap ' + shareIcon + ' Share in the toolbar, scroll down past the apps, and tap <strong>"Add to Home Screen"</strong>';
   const androidSteps = 'Tap the <strong>install</strong> button below to add Train to your home screen';
   const defaultSteps = 'Open your browser menu and look for <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>';
 
