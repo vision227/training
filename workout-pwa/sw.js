@@ -14,14 +14,18 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    caches.keys().then(keys => {
+      const old = keys.filter(k => k !== CACHE_NAME);
+      return Promise.all(old.map(k => caches.delete(k))).then(() => {
+        if (old.length > 0) {
+          self.clients.matchAll().then(clients => {
+            clients.forEach(c => c.postMessage({ type: 'SW_UPDATED' }));
+          });
+        }
+      });
+    })
   );
   self.clients.claim();
-  self.clients.matchAll().then(clients => {
-    clients.forEach(c => c.postMessage({ type: 'SW_UPDATED' }));
-  });
 });
 
 self.addEventListener('fetch', e => {

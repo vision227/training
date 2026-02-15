@@ -2203,8 +2203,10 @@ if ('serviceWorker' in navigator) {
       });
     });
   }).catch(() => {});
+  let hasController = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
+    if (hasController) window.location.reload();
+    hasController = true;
   });
   navigator.serviceWorker.addEventListener('message', e => {
     if (e.data && e.data.type === 'SW_UPDATED') window.location.reload();
